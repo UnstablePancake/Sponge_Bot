@@ -13,11 +13,8 @@ public class ModeratorCommands extends Commands {
     public ModeratorCommands(IDiscordClient client) {
         super(client);
         D4JModule.getListener().setPrefix("!");
-    }
-
-    @Override
-    public void register(){
         prune();
+        setServerName();
     }
 
     public void prune(){
@@ -34,6 +31,17 @@ public class ModeratorCommands extends Commands {
                     } else {
                         msg.reply("Usage: !prune (amount)");
                     }
+                }));
+    }
+
+    public void setServerName(){
+        reg.registerCommand(new D4JCommandBuilder("setservername")
+                .build((args, msg) -> {
+                    String name = "";
+                    for(String s : args) {
+                        name += s + " ";
+                    }
+                    msg.getGuild().changeName(name);
                 }));
     }
 }

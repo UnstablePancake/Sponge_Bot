@@ -12,10 +12,6 @@ public class LuckCommands extends Commands {
     public LuckCommands(IDiscordClient client){
         super(client);
         D4JModule.getListener().setPrefix(">");
-    }
-
-    @Override
-    public void register(){
         coinFlip();
         magicConch();
     }

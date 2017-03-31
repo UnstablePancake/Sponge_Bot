@@ -8,10 +8,6 @@ public class GeneralCommands extends Commands {
 
     public GeneralCommands(IDiscordClient client){
         super(client);
-    }
-
-    @Override
-    public void register(){
         ping();
     }
 

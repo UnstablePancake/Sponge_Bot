@@ -13,10 +13,6 @@ public class AudioCommands extends Commands {
         super(client);
         audio = new Audio(client);
         D4JModule.getListener().setPrefix("~");
-    }
-
-    @Override
-    public void register(){
         join();
         leave();
     }

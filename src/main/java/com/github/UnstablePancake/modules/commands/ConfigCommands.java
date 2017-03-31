@@ -13,10 +13,6 @@ public class ConfigCommands extends Commands {
     public ConfigCommands(IDiscordClient client){
         super(client);
         D4JModule.getListener().setPrefix("!");
-    }
-
-    @Override
-    public void register(){
         setStatus(client);
     }
 

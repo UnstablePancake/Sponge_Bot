@@ -19,8 +19,5 @@ public abstract class Commands {
         D4JModule = new DistortD4JModule();
         client.getModuleLoader().loadModule(D4JModule);
         reg = D4JModule.getRegistry();
-        register();
     }
-
-    public abstract void register();
 }
