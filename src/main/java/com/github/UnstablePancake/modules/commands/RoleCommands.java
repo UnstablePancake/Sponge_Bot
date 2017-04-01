@@ -38,6 +38,7 @@ public class RoleCommands extends Commands {
                                     .withColor(new Color(78, 185, 110))
                                     .appendField(":hammer_pick: Role added", "**Role:** " + role.toString() + "\n**Target:** " + msg.getGuild().getUserByID(id).getName(), false)
                                     .build(), false);
+                            msg.delete();
                         }
                     }
                 }));
@@ -64,6 +65,7 @@ public class RoleCommands extends Commands {
                                     .withColor(new Color(231, 76, 60))
                                     .appendField(":hammer_pick: Role removed", "**Role:** " + role.toString() + "\n**Target:** " + msg.getGuild().getUserByID(id).getName(), false)
                                     .build(), false);
+                            msg.delete();
                         }
                     }
                 }));

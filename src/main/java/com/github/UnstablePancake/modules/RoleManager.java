@@ -1,9 +1,12 @@
 package com.github.UnstablePancake.modules;
 
+import com.github.UnstablePancake.modules.Roles.RolePermissions;
 import com.github.UnstablePancake.modules.Roles.Roles;
+import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
 import sx.blah.discord.handle.impl.events.UserJoinEvent;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IRole;
+import sx.blah.discord.handle.obj.IUser;
 import sx.blah.discord.util.*;
 
 import java.awt.*;
@@ -23,7 +26,7 @@ public class RoleManager {
     public void createRoles() throws RateLimitException, DiscordException, MissingPermissionsException {
         for (Roles r : Roles.values()){
             if (!exists(r)){
-                roleBuilder.withName(r.getName()).withColor(r.getColor()).build();
+                roleBuilder.withName(r.getName()).withColor(r.getColor()).withPermissions(r.getPermission()).build();
                 System.out.println("$" + r.getName() + " was created.");
             } else {
                 System.out.println("$" + r.getName() + " already exists. Role was not created");
