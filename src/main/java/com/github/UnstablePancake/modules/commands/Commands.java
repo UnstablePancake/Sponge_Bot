@@ -1,4 +1,4 @@
-package com.github.UnstablePancake.modules;
+package com.github.UnstablePancake.modules.commands;
 
 import co.kaioru.distort.d4j.module.DistortD4JModule;
 import co.kaioru.retort.CommandRegistry;

@@ -2,7 +2,6 @@ package com.github.UnstablePancake.modules.commands;
 
 import co.kaioru.distort.d4j.command.D4JCommandBuilder;
 import com.github.UnstablePancake.bot.SpongeBot;
-import com.github.UnstablePancake.modules.Commands;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.handle.obj.Status;
 

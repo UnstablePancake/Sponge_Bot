@@ -1,4 +1,4 @@
-package com.github.UnstablePancake.modules;
+package com.github.UnstablePancake.modules.Roles;
 
 import java.awt.*;
 

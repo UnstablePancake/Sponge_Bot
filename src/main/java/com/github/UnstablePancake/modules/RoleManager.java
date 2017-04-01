@@ -1,5 +1,6 @@
 package com.github.UnstablePancake.modules;
 
+import com.github.UnstablePancake.modules.Roles.Roles;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IRole;
 import sx.blah.discord.util.DiscordException;
