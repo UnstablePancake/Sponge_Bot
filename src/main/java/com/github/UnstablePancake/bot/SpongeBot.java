@@ -55,9 +55,10 @@ public class SpongeBot {
     public class EventHandler {
 
         @EventSubscriber
-        public void onReadyEvent(ReadyEvent event){
+        public void onReadyEvent(ReadyEvent event) throws RateLimitException, DiscordException, MissingPermissionsException {
             moderator = new Moderator(client, client.getChannels().get(0));
             new CommandHandler(client);
+            new RoleManager(client.getGuilds().get(0));
             System.out.println("##########################\n# Spongebot is now ready #\n##########################");
         }
 

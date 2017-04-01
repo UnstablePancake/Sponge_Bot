@@ -3,7 +3,7 @@ package com.github.UnstablePancake.modules.commands;
 import co.kaioru.distort.d4j.command.D4JCommandBuilder;
 import com.github.UnstablePancake.modules.Commands;
 import sx.blah.discord.api.IDiscordClient;
-import sx.blah.discord.api.internal.json.objects.EmbedObject;
+import sx.blah.discord.util.EmbedBuilder;
 
 import java.awt.*;
 
@@ -45,8 +45,16 @@ public class LuckCommands extends Commands {
 
                     int random = (int)(Math.random() * 10);
 
-                    EmbedObject object = embedBuilder.withColor(Color.red).withDesc(":8ball: 8ball\n" + outcome[random]).build();
-                    messageBuilder.withEmbed(object).withChannel(msg.getChannel()).send();
+                    String question = "";
+                    for (String s : args){
+                        question += s + " ";
+                    }
+
+                    msg.getChannel().sendMessage(null, new EmbedBuilder()
+                            .withColor(new Color(78, 185, 110))
+                            .appendField(":question: Question", question, false)
+                            .appendField(":8ball: 8ball", outcome[random], false)
+                            .build(), false);
                 }));
     }
 }
