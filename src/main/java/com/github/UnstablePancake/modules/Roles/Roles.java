@@ -7,7 +7,8 @@ public enum Roles {
     // Main Roles
     admin("Administrator", new Color(78, 185, 110)),
     mod("Moderator", new Color(229, 76, 59)),
-    user("Regular", new Color(59, 151, 210)),
+    regular("Regular", new Color(59, 151, 210)),
+    user("User", new Color(255, 255, 255)),
     guest("Guest", new Color(153, 170, 181)),
 
     // Other Roles

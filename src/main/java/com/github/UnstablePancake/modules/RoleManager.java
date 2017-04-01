@@ -1,12 +1,12 @@
 package com.github.UnstablePancake.modules;
 
 import com.github.UnstablePancake.modules.Roles.Roles;
+import sx.blah.discord.handle.impl.events.UserJoinEvent;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IRole;
-import sx.blah.discord.util.DiscordException;
-import sx.blah.discord.util.MissingPermissionsException;
-import sx.blah.discord.util.RateLimitException;
-import sx.blah.discord.util.RoleBuilder;
+import sx.blah.discord.util.*;
+
+import java.awt.*;
 import java.util.List;
 
 public class RoleManager {
@@ -37,5 +37,16 @@ public class RoleManager {
                 return true;
         }
         return false;
+    }
+
+    public void welcomeMessage(UserJoinEvent event) throws RateLimitException, DiscordException, MissingPermissionsException {
+        event.getGuild().getChannels().get(0).sendMessage(null, new EmbedBuilder()
+                .withColor(new Color(153, 170, 181))
+                .withTitle("Welcome to the server " + event.getUser().getName()).build(), false);
+    }
+
+    public void setRole(UserJoinEvent event, IRole role) throws RateLimitException, DiscordException, MissingPermissionsException {
+        event.getGuild().getUserByID(event.getUser().getID()).addRole(role);
+        System.out.println(event.getUser().getName() + "_" + role);
     }
 }

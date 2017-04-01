@@ -1,6 +1,7 @@
 package com.github.UnstablePancake.bot;
 
 import com.github.UnstablePancake.modules.*;
+import com.github.UnstablePancake.modules.Roles.Roles;
 import org.json.JSONObject;
 import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
@@ -8,6 +9,7 @@ import sx.blah.discord.api.events.EventDispatcher;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
 import sx.blah.discord.handle.impl.events.ReadyEvent;
+import sx.blah.discord.handle.impl.events.UserJoinEvent;
 import sx.blah.discord.util.DiscordException;
 import sx.blah.discord.util.MissingPermissionsException;
 import sx.blah.discord.util.RateLimitException;
@@ -19,6 +21,7 @@ public class SpongeBot {
     public static IDiscordClient client;
 
     public static Moderator moderator;
+    public RoleManager roleManager;
 
     public static void main(String[] args){
         try {
@@ -57,8 +60,8 @@ public class SpongeBot {
         @EventSubscriber
         public void onReadyEvent(ReadyEvent event) throws RateLimitException, DiscordException, MissingPermissionsException {
             moderator = new Moderator(client, client.getChannels().get(0));
+            roleManager = new RoleManager(client.getGuilds().get(0));
             new CommandHandler(client);
-            new RoleManager(client.getGuilds().get(0));
             System.out.println("##########################\n# Spongebot is now ready #\n##########################");
         }
 
@@ -66,6 +69,12 @@ public class SpongeBot {
         public void onMessageReceivedEvent(MessageReceivedEvent event) throws RateLimitException, DiscordException, MissingPermissionsException {
             if (event.getMessage().getChannel().getID().equals(client.getChannels().get(0)))
                 moderator.recordMessage(event);
+        }
+
+        @EventSubscriber
+        public void onUserJoinEvent(UserJoinEvent event) throws RateLimitException, DiscordException, MissingPermissionsException {
+            roleManager.setRole(event, client.getRoles().get(10));
+            roleManager.welcomeMessage(event);
         }
     }
 }
