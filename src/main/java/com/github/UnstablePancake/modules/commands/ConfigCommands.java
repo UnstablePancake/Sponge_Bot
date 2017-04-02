@@ -16,12 +16,11 @@ public class ConfigCommands extends Commands {
         reg.registerCommand(new D4JCommandBuilder("setstatus")
                 .build((args, msg) -> {
                     if(msg.getAuthor().getID().equals("164909448043823104")){
-                        String status = "";
-
-                        for (String s : args) {
-                            status += s + " ";
-                        }
-                        client.changeStatus(Status.game(status));
+                        if(args.size() > 0) {
+                            String status = msg.getContent().substring(10);
+                            client.changeStatus(Status.game(status));
+                        } else
+                            client.changeStatus(Status.empty());
                     }
                 }));
     }
