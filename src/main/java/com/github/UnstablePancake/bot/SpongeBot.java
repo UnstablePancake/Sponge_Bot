@@ -73,7 +73,7 @@ public class SpongeBot {
 
         @EventSubscriber
         public void onUserJoinEvent(UserJoinEvent event) throws RateLimitException, DiscordException, MissingPermissionsException {
-            roleManager.setRole(event, client.getRoles().get(10));
+            roleManager.setRole(event, client.getRoles().get(11));
             roleManager.welcomeMessage(event);
         }
     }
