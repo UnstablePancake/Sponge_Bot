@@ -7,8 +7,6 @@ import sx.blah.discord.handle.obj.Status;
 
 public class ConfigCommands extends Commands {
 
-    private IDiscordClient client = SpongeBot.client;
-
     public ConfigCommands(IDiscordClient client){
         super(client);
         D4JModule.getListener().setPrefix("!");
