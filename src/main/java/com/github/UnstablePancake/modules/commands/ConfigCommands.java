@@ -16,12 +16,14 @@ public class ConfigCommands extends Commands {
     public void setStatus(IDiscordClient client){
         reg.registerCommand(new D4JCommandBuilder("setstatus")
                 .build((args, msg) -> {
-                    String status = "";
+                    if(msg.getAuthor().getID().equals("164909448043823104")){
+                        String status = "";
 
-                    for (String s : args){
-                        status += s + " ";
+                        for (String s : args) {
+                            status += s + " ";
+                        }
+                        client.changeStatus(Status.game(status));
                     }
-                    client.changeStatus(Status.game(status));
                 }));
     }
 }
