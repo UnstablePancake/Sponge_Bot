@@ -14,6 +14,7 @@ public class ModeratorCommands extends Commands {
         D4JModule.getListener().setPrefix("!");
         prune();
         setServerName();
+        setServerDesc();
         shutdown();
     }
 
@@ -40,6 +41,21 @@ public class ModeratorCommands extends Commands {
                     if(msg.getAuthor().getID().equals("164909448043823104") && args.size() > 0) {
                         String name = msg.getContent().substring(14);
                         msg.getGuild().changeName(name);
+                        msg.delete();
+                    }
+                }));
+    }
+
+    public void setServerDesc(){
+        reg.registerCommand(new D4JCommandBuilder("setserverdesc")
+                .build((args, msg) -> {
+                    if(args.size() > 0){
+                        String topic = msg.getContent().substring(14);
+                        msg.getGuild().getChannels().get(0).changeTopic(topic);
+                        msg.delete();
+                    } else {
+                        msg.getGuild().getChannels().get(0).changeTopic(null);
+                        msg.delete();
                     }
                 }));
     }
