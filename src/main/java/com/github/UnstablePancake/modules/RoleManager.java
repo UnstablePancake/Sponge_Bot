@@ -1,14 +1,10 @@
 package com.github.UnstablePancake.modules;
 
-import com.github.UnstablePancake.modules.Roles.RolePermissions;
 import com.github.UnstablePancake.modules.Roles.Roles;
-import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
 import sx.blah.discord.handle.impl.events.UserJoinEvent;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IRole;
-import sx.blah.discord.handle.obj.IUser;
 import sx.blah.discord.util.*;
-
 import java.awt.*;
 import java.util.List;
 

@@ -3,6 +3,7 @@ package com.github.UnstablePancake.modules.commands;
 import co.kaioru.distort.d4j.command.D4JCommandBuilder;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.handle.obj.IRole;
+import sx.blah.discord.handle.obj.Permissions;
 import sx.blah.discord.util.EmbedBuilder;
 
 import java.awt.*;
@@ -20,7 +21,7 @@ public class RoleCommands extends Commands {
     public void addRole(){
         reg.registerCommand(new D4JCommandBuilder("addrole")
                 .build((args, msg) -> {
-                    if (msg.getAuthor().getID().equals("164909448043823104") && args.size() > 0) {
+                    if (msg.getAuthor().getID().equals("164909448043823104") && args.size() > 0){
                         String id = args.get(0);
                         String text = args.get(1);
                         IRole role = null;
@@ -30,7 +31,7 @@ public class RoleCommands extends Commands {
                             if (roles.get(i).getName().equalsIgnoreCase(text))
                                 role = roles.get(i);
                         }
-                        System.out.println(id + " " + text + " " + role);
+
                         if (role != null){
                             msg.getGuild().getUserByID(id).addRole(role);
 
@@ -57,7 +58,7 @@ public class RoleCommands extends Commands {
                             if (roles.get(i).getName().equalsIgnoreCase(text))
                                 role = roles.get(i);
                         }
-                        System.out.println(id + " " + text + " " + role);
+
                         if (role != null) {
                             msg.getGuild().getUserByID(id).removeRole(role);
 
