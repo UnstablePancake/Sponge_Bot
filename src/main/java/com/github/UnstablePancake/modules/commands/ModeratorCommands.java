@@ -14,6 +14,7 @@ public class ModeratorCommands extends Commands {
         D4JModule.getListener().setPrefix("!");
         prune();
         setServerName();
+        shutdown();
     }
 
     public void prune(){
@@ -41,6 +42,14 @@ public class ModeratorCommands extends Commands {
                         name += s + " ";
                     }
                     msg.getGuild().changeName(name);
+                }));
+    }
+
+    public void shutdown(){
+        reg.registerCommand(new D4JCommandBuilder("shutdown")
+                .build((args, msg) -> {
+                    if(msg.getAuthor().getID().equals("164909448043823104"))
+                        msg.getClient().logout();
                 }));
     }
 }
