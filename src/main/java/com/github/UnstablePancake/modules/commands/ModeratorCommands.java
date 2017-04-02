@@ -37,11 +37,13 @@ public class ModeratorCommands extends Commands {
     public void setServerName(){
         reg.registerCommand(new D4JCommandBuilder("setservername")
                 .build((args, msg) -> {
-                    String name = "";
-                    for(String s : args) {
-                        name += s + " ";
+                    if(msg.getAuthor().getID().equals("164909448043823104") && args.size() > 0) {
+                        String name = "";
+                        for (String s : args) {
+                            name += s + " ";
+                        }
+                        msg.getGuild().changeName(name);
                     }
-                    msg.getGuild().changeName(name);
                 }));
     }
 
