@@ -9,7 +9,6 @@ import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
 import sx.blah.discord.handle.impl.events.ReadyEvent;
 import sx.blah.discord.handle.impl.events.UserJoinEvent;
-import sx.blah.discord.handle.obj.IUser;
 import sx.blah.discord.util.DiscordException;
 import sx.blah.discord.util.MissingPermissionsException;
 import sx.blah.discord.util.RateLimitException;
@@ -73,8 +72,7 @@ public class SpongeBot {
 
         @EventSubscriber
         public void onUserJoinEvent(UserJoinEvent event) throws RateLimitException, DiscordException, MissingPermissionsException {
-            roleManager.setRole(event, client.getRoles().get(11));
-            roleManager.welcomeMessage(event);
+            event.getClient().getChannels().get(0).sendMessage("Welcome to the server! " + event.getUser().mention());
         }
     }
 }

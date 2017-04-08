@@ -11,6 +11,7 @@ public class CommandHandler {
         new GeneralCommands(client);
         new LuckCommands(client);
         new ModeratorCommands(client);
+        new PollCommands(client);
         new RoleCommands(client);
     }
 }
