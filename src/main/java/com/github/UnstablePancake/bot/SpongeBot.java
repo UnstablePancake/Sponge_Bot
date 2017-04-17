@@ -75,9 +75,8 @@ public class SpongeBot {
 
         @EventSubscriber
         public void onReactionAddEvent(ReactionAddEvent event) throws RateLimitException, DiscordException, MissingPermissionsException {
-            if(!event.getUser().isBot() && event.getReaction().isCustomEmoji()) {
+            if(!event.getUser().isBot() && event.getReaction().isCustomEmoji()){
                 Poll.addVotes(event);
-
             }
         }
 

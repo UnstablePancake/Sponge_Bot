@@ -2,7 +2,6 @@ package com.github.UnstablePancake.modules;
 
 import sx.blah.discord.handle.impl.events.ReactionAddEvent;
 import sx.blah.discord.handle.impl.events.ReactionRemoveEvent;
-import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.util.DiscordException;
 import sx.blah.discord.util.EmbedBuilder;
 import sx.blah.discord.util.MissingPermissionsException;
@@ -18,7 +17,7 @@ public class Poll {
     private static String title = null;
     public static String id = null;
 
-    public static String createPollString(LinkedList<String> list){
+    public static String createOptionPoll(LinkedList<String> list){
         String poll = "";
         for(int i = 1; i < list.size(); i++){
             if(i > symbol.length)
@@ -31,15 +30,15 @@ public class Poll {
     }
 
     public static String createGeneralPoll(){
-        return "<:Contortionist:248262846222172161> (" + votes[0] + ") Yes <:AnnieLUL:277667639382507521> (" + votes[1] + ") No";
+        return "<:VoteUp:303664389746196480> (" + votes[0] + ") Yes <:VoteDown:303664478057136138> (" + votes[1] + ") No";
     }
 
     public static void addVotes(ReactionAddEvent event){
         if(id.equals(event.getMessage().getID())){
-            if(event.getReaction().getCustomEmoji().getID().equals("248262846222172161")){
+            if(event.getReaction().getCustomEmoji().getID().equals("303664389746196480")){
                 votes[0]++;
             }
-            else if(event.getReaction().getCustomEmoji().getID().equals("277667639382507521")){
+            else if(event.getReaction().getCustomEmoji().getID().equals("303664478057136138")){
                 votes[1]++;
             }
             update(event);
@@ -48,10 +47,10 @@ public class Poll {
 
     public static void removeVotes(ReactionRemoveEvent event){
         if(id.equals(event.getMessage().getID())){
-            if(event.getReaction().getCustomEmoji().getID().equals("248262846222172161")){
+            if(event.getReaction().getCustomEmoji().getID().equals("303664389746196480")){
                 votes[0]--;
             }
-            else if(event.getReaction().getCustomEmoji().getID().equals("277667639382507521")){
+            else if(event.getReaction().getCustomEmoji().getID().equals("303664478057136138")){
                 votes[1]--;
             }
             update(event);
