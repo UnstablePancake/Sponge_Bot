@@ -6,27 +6,18 @@ import sx.blah.discord.util.DiscordException;
 import sx.blah.discord.util.EmbedBuilder;
 import sx.blah.discord.util.MissingPermissionsException;
 import sx.blah.discord.util.RateLimitException;
-
 import java.awt.*;
-import java.util.LinkedList;
 
 public class Poll {
 
-    public static String[] symbol = {":thumbsup:", ":thumbsdown:", ":punch:", ":fist:", ":v:", ":ok_hand:"};
+    public static String[] symbol = {"<:VoteUp:303664389746196480>", "<:VoteDown:303664478057136138>", "<:AndyQueer:231973860994449408>", "<:Coldslaw:269284728593448970>", "<:Tommy420:269248038113902592>", "<:JeffreyWut:230126794123116544>"};
     private static int[] votes = {0, 0, 0, 0, 0, 0};
     private static String title = null;
     public static String id = null;
+    private static int count = 0;
 
-    public static String createOptionPoll(LinkedList<String> list){
-        String poll = "";
-        for(int i = 1; i < list.size(); i++){
-            if(i > symbol.length)
-                break;
-            else {
-                poll += symbol[i] + " " + list.get(i) + "\n";
-            }
-        }
-        return poll;
+    public static String createOptionPoll(String s){
+        return construct(s);
     }
 
     public static String createGeneralPoll(){
@@ -87,6 +78,46 @@ public class Poll {
         }
     }
 
+    public static String construct(String s){
+        count = 0;
+        String msg = "";
+        for (int i = 0; i < s.length(); i++){
+            if (s.charAt(i) != ';') {
+                if (count > 0)
+                    msg += s.charAt(i);
+            } else {
+                msg += "\n" + symbol[count] + " ";
+                count++;
+            }
+        }
+        return msg;
+    }
+
+    public static boolean isReady(String s){
+        int count = 0;
+        for(int i = 0;i < s.length(); i++){
+            if(s.charAt(i) == ';'){
+                count++;
+            }
+        }
+        return count > 0 && count <= 6;
+    }
+
+    public static String findTitle(String s){
+        String title = "";
+        for(int i = 0; i < s.length(); i++){
+            if(s.charAt(i) == ';')
+                break;
+            title += s.charAt(i);
+        }
+        return title;
+    }
+
+    public static void resetVotes(){
+        for(int i = 0; i < votes.length; i++)
+            votes[i] = 0;
+    }
+
     public static void setTitle(String s){
         title = s;
     }
@@ -95,12 +126,11 @@ public class Poll {
         id = s;
     }
 
-    public static String getTitle(){
-        return title;
+    public static int getCount(){
+        return count;
     }
 
-    public static void resetVotes(){
-        for(int i = 0; i < votes.length; i++)
-            votes[i] = 0;
+    public static String getTitle(){
+        return title;
     }
 }
