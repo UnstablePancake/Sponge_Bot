@@ -10,75 +10,29 @@ import java.awt.*;
 
 public class Poll {
 
-    public static String[] symbol = {"<:VoteUp:303664389746196480>", "<:VoteDown:303664478057136138>", "<:AndyQueer:231973860994449408>", "<:Coldslaw:269284728593448970>", "<:Tommy420:269248038113902592>", "<:JeffreyWut:230126794123116544>"};
+    public static String[] symbol = {
+            "<:VoteUp:303664389746196480>",
+            "<:VoteDown:303664478057136138>",
+            "<:AndyQueer:231973860994449408>",
+            "<:Coldslaw:269284728593448970>",
+            "<:Tommy420:269248038113902592>",
+            "<:JeffreyWut:230126794123116544>"
+    };
     private static int[] votes = {0, 0, 0, 0, 0, 0};
     private static String title = null;
     public static String id = null;
     private static int count = 0;
-
-    public static String createOptionPoll(String s){
-        return construct(s);
-    }
+    private static boolean isDefault = true;
+    private static String options = null;
 
     public static String createGeneralPoll(){
+        isDefault = true;
         return "<:VoteUp:303664389746196480> (" + votes[0] + ") Yes <:VoteDown:303664478057136138> (" + votes[1] + ") No";
     }
 
-    public static void addVotes(ReactionAddEvent event){
-        if(id.equals(event.getMessage().getID())){
-            if(event.getReaction().getCustomEmoji().getID().equals("303664389746196480")){
-                votes[0]++;
-            }
-            else if(event.getReaction().getCustomEmoji().getID().equals("303664478057136138")){
-                votes[1]++;
-            }
-            update(event);
-        }
-    }
-
-    public static void removeVotes(ReactionRemoveEvent event){
-        if(id.equals(event.getMessage().getID())){
-            if(event.getReaction().getCustomEmoji().getID().equals("303664389746196480")){
-                votes[0]--;
-            }
-            else if(event.getReaction().getCustomEmoji().getID().equals("303664478057136138")){
-                votes[1]--;
-            }
-            update(event);
-        }
-    }
-
-    public static void update(ReactionAddEvent event){
-        try {
-            event.getClient().getMessageByID(id).edit(null, new EmbedBuilder()
-                    .withColor(Color.cyan)
-                    .appendField(":ballot_box_with_check: Poll: " + title, Poll.createGeneralPoll(), false)
-                    .build());
-        } catch (MissingPermissionsException e) {
-            e.printStackTrace();
-        } catch (RateLimitException e) {
-            e.printStackTrace();
-        } catch (DiscordException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void update(ReactionRemoveEvent event){
-        try {
-            event.getClient().getMessageByID(id).edit(null, new EmbedBuilder()
-                    .withColor(Color.cyan)
-                    .appendField(":ballot_box_with_check: Poll: " + title, Poll.createGeneralPoll(), false)
-                    .build());
-        } catch (MissingPermissionsException e) {
-            e.printStackTrace();
-        } catch (RateLimitException e) {
-            e.printStackTrace();
-        } catch (DiscordException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static String construct(String s){
+    public static String createOptionPoll(String s){
+        isDefault = false;
+        options = s;
         count = 0;
         String msg = "";
         for (int i = 0; i < s.length(); i++){
@@ -86,11 +40,131 @@ public class Poll {
                 if (count > 0)
                     msg += s.charAt(i);
             } else {
-                msg += "\n" + symbol[count] + " ";
+                msg += "\n" + symbol[count] + " (" + votes[count] + ") ";
                 count++;
             }
         }
         return msg;
+    }
+
+    public static void addVotes(ReactionAddEvent event){
+        if(isDefault){
+            if(id.equals(event.getMessage().getID())){
+                if(event.getReaction().getCustomEmoji().getID().equals("303664389746196480")) {
+                    votes[0]++;
+                } else if (event.getReaction().getCustomEmoji().getID().equals("303664478057136138")) {
+                    votes[1]++;
+                }
+                update(event);
+            }
+        } else {
+            if(id.equals(event.getMessage().getID())){
+                if(event.getReaction().getCustomEmoji().getID().equals("303664389746196480")){
+                    votes[0]++;
+                } else if (event.getReaction().getCustomEmoji().getID().equals("303664478057136138")) {
+                    votes[1]++;
+                } else if (event.getReaction().getCustomEmoji().getID().equals("231973860994449408")) {
+                    votes[2]++;
+                } else if (event.getReaction().getCustomEmoji().getID().equals("269284728593448970")) {
+                    votes[3]++;
+                } else if (event.getReaction().getCustomEmoji().getID().equals("269248038113902592")) {
+                    votes[4]++;
+                } else if (event.getReaction().getCustomEmoji().getID().equals("230126794123116544")) {
+                    votes[5]++;
+                }
+                update(event);
+            }
+        }
+    }
+
+    public static void removeVotes(ReactionRemoveEvent event){
+        if(isDefault){
+            if (id.equals(event.getMessage().getID())) {
+                if (event.getReaction().getCustomEmoji().getID().equals("303664389746196480")) {
+                    votes[0]--;
+                } else if (event.getReaction().getCustomEmoji().getID().equals("303664478057136138")) {
+                    votes[1]--;
+                }
+                update(event);
+            }
+        } else {
+            if(id.equals(event.getMessage().getID())){
+                if (event.getReaction().getCustomEmoji().getID().equals("303664389746196480")){
+                    votes[0]--;
+                } else if (event.getReaction().getCustomEmoji().getID().equals("303664478057136138")){
+                    votes[1]--;
+                } else if (event.getReaction().getCustomEmoji().getID().equals("231973860994449408")){
+                    votes[2]--;
+                } else if (event.getReaction().getCustomEmoji().getID().equals("269284728593448970")){
+                    votes[3]--;
+                } else if (event.getReaction().getCustomEmoji().getID().equals("269248038113902592")){
+                    votes[4]--;
+                } else if (event.getReaction().getCustomEmoji().getID().equals("230126794123116544")){
+                    votes[5]--;
+                }
+                update(event);
+            }
+        }
+    }
+
+    public static void update(ReactionRemoveEvent event){
+        if(isDefault){
+            try {
+                event.getClient().getMessageByID(id).edit(null, new EmbedBuilder()
+                        .withColor(Color.cyan)
+                        .appendField(":ballot_box_with_check: Poll: " + title, Poll.createGeneralPoll(), false)
+                        .build());
+            } catch (MissingPermissionsException e){
+                e.printStackTrace();
+            } catch (RateLimitException e){
+                e.printStackTrace();
+            } catch (DiscordException e){
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                event.getClient().getMessageByID(id).edit(null, new EmbedBuilder()
+                        .withColor(Color.cyan)
+                        .appendField(":ballot_box_with_check: Poll: " + title, Poll.createOptionPoll(options), false)
+                        .build());
+            } catch (MissingPermissionsException e) {
+                e.printStackTrace();
+            } catch (RateLimitException e) {
+                e.printStackTrace();
+            } catch (DiscordException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void update(ReactionAddEvent event){
+        if(isDefault){
+            try {
+                event.getClient().getMessageByID(id).edit(null, new EmbedBuilder()
+                        .withColor(Color.cyan)
+                        .appendField(":ballot_box_with_check: Poll: " + title, Poll.createGeneralPoll(), false)
+                        .build());
+            } catch (MissingPermissionsException e) {
+                e.printStackTrace();
+            } catch (RateLimitException e){
+                e.printStackTrace();
+            } catch (DiscordException e){
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                event.getClient().getMessageByID(id).edit(null, new EmbedBuilder()
+                        .withColor(Color.cyan)
+                        .appendField(":ballot_box_with_check: Poll: " + title, Poll.createOptionPoll(options), false)
+                        .build());
+            } catch (MissingPermissionsException e) {
+                e.printStackTrace();
+            } catch (RateLimitException e) {
+                e.printStackTrace();
+            } catch (DiscordException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static boolean isReady(String s){
