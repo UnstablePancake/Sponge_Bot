@@ -1,2 +1,2 @@
-# Sponge_Bot
+# Sponge\[Bot\]
 Private Discord Bot
