@@ -26,6 +26,14 @@ public class RoleCommands extends Commands {
                         IRole role = null;
                         List<IRole> roles = msg.getClient().getRoles();
 
+                        if(id.startsWith("<@")){
+                            id = "";
+                            for(int i = 0; i < args.get(0).length(); i++){
+                                if(Character.isDigit(args.get(0).charAt(i)))
+                                    id += args.get(0).charAt(i);
+                            }
+                        }
+
                         for (int i = 0; i < roles.size(); i++) {
                             if (roles.get(i).getName().equalsIgnoreCase(text))
                                 role = roles.get(i);
@@ -52,6 +60,14 @@ public class RoleCommands extends Commands {
                         String text = args.get(1);
                         IRole role = null;
                         List<IRole> roles = msg.getClient().getRoles();
+
+                        if(id.startsWith("<@")){
+                            id = "";
+                            for(int i = 0; i < args.get(0).length(); i++){
+                                if(Character.isDigit(args.get(0).charAt(i)))
+                                    id += args.get(0).charAt(i);
+                            }
+                        }
 
                         for (int i = 0; i < roles.size(); i++) {
                             if (roles.get(i).getName().equalsIgnoreCase(text))
