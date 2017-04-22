@@ -6,9 +6,7 @@ import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.api.events.EventDispatcher;
 import sx.blah.discord.api.events.EventSubscriber;
-import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
-import sx.blah.discord.handle.impl.events.ReadyEvent;
-import sx.blah.discord.handle.impl.events.UserJoinEvent;
+import sx.blah.discord.handle.impl.events.*;
 import sx.blah.discord.util.DiscordException;
 import sx.blah.discord.util.MissingPermissionsException;
 import sx.blah.discord.util.RateLimitException;
@@ -61,7 +59,7 @@ public class SpongeBot {
             moderator = new Moderator(client, client.getChannels().get(0));
             roleManager = new RoleManager(client.getGuilds().get(0));
             new CommandHandler(client);
-            System.out.println("##########################\n# Spongebot is now ready #\n##########################");
+            System.out.println("Spongebot is ready");
         }
 
         @EventSubscriber
@@ -73,6 +71,19 @@ public class SpongeBot {
         @EventSubscriber
         public void onUserJoinEvent(UserJoinEvent event) throws RateLimitException, DiscordException, MissingPermissionsException {
             event.getClient().getChannels().get(0).sendMessage("Welcome to the server! " + event.getUser().mention());
+        }
+
+        @EventSubscriber
+        public void onReactionAddEvent(ReactionAddEvent event) throws RateLimitException, DiscordException, MissingPermissionsException {
+            if(!event.getUser().isBot() && event.getReaction().isCustomEmoji()){
+                Poll.addVotes(event);
+            }
+        }
+
+        @EventSubscriber
+        public void onReactionRemoveEvent(ReactionRemoveEvent event) throws RateLimitException, DiscordException, MissingPermissionsException {
+            if(!event.getUser().isBot() && event.getReaction().isCustomEmoji())
+                Poll.removeVotes(event);
         }
     }
 }
