@@ -15,7 +15,7 @@ public class GeneralCommands extends Commands {
         reg.registerCommand(new D4JCommandBuilder("ping")
                 .build((args, msg) -> {
                     msg.getChannel().sendMessage("pong!");
-                }));
+        }));
     }
 
     private void avatar(){

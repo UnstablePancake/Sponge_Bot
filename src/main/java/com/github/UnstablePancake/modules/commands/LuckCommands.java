@@ -22,7 +22,7 @@ public class LuckCommands extends Commands {
                         msg.reply("Heads");
                     else
                         msg.reply("Tails");
-                }));
+        }));
     }
 
     private void magicConch(){
@@ -53,6 +53,6 @@ public class LuckCommands extends Commands {
                             .appendField(":question: Question", question, false)
                             .appendField(":8ball: 8ball", outcome[random], false)
                             .build(), false);
-                }));
+        }));
     }
 }

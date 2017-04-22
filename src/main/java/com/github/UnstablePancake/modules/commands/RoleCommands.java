@@ -54,7 +54,7 @@ public class RoleCommands extends Commands {
                     } else {
                         msg.getChannel().sendMessage(RolePermissions.noPermission());
                     }
-                }));
+        }));
     }
 
     private void remRole(){
@@ -93,6 +93,6 @@ public class RoleCommands extends Commands {
                     } else {
                         msg.getChannel().sendMessage(RolePermissions.noPermission());
                     }
-                }));
+        }));
     }
 }

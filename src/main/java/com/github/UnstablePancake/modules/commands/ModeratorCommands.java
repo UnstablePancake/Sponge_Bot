@@ -38,7 +38,7 @@ public class ModeratorCommands extends Commands {
                     } else {
                         msg.getChannel().sendMessage(RolePermissions.noPermission());
                     }
-                }));
+        }));
     }
 
     private void setServerName(){
@@ -49,7 +49,7 @@ public class ModeratorCommands extends Commands {
                         msg.getGuild().changeName(name);
                         msg.delete();
                     }
-                }));
+        }));
     }
 
     private void setServerDesc(){
@@ -63,7 +63,7 @@ public class ModeratorCommands extends Commands {
                         msg.getGuild().getChannels().get(0).changeTopic(null);
                         msg.delete();
                     }
-                }));
+        }));
     }
 
     private void shutdown(){
@@ -71,6 +71,6 @@ public class ModeratorCommands extends Commands {
                 .build((args, msg) -> {
                     if(RolePermissions.isAdmin(msg))
                         msg.getClient().logout();
-                }));
+        }));
     }
 }
