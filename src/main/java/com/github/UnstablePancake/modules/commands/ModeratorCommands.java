@@ -3,7 +3,9 @@ package com.github.UnstablePancake.modules.commands;
 import co.kaioru.distort.d4j.command.D4JCommandBuilder;
 import com.github.UnstablePancake.bot.SpongeBot;
 import com.github.UnstablePancake.modules.Moderator;
+import com.github.UnstablePancake.modules.Roles.RolePermissions;
 import sx.blah.discord.api.IDiscordClient;
+import sx.blah.discord.handle.obj.Permissions;
 
 public class ModeratorCommands extends Commands {
 
@@ -18,28 +20,33 @@ public class ModeratorCommands extends Commands {
         shutdown();
     }
 
+
     public void prune(){
         reg.registerCommand(new D4JCommandBuilder("prune")
                 .build((args, msg) -> {
                     int length;
-                    if(msg.getAuthor().getID().equals("164909448043823104") && args.size() > 0){
-                        try {
-                            length = Integer.parseInt(args.get(0));
-                            moderator.getMessageList().deleteBefore(length);
-                        } catch (NumberFormatException e){
+                    if(RolePermissions.isAdmin(msg)){
+                        if(args.size() > 0){
+                            try {
+                                length = Integer.parseInt(args.get(0));
+                                moderator.getMessageList().deleteBefore(length);
+                            } catch (NumberFormatException e) {
+                                msg.reply("Usage: !prune (amount)");
+                            }
+                        } else {
                             msg.reply("Usage: !prune (amount)");
                         }
                     } else {
-                        msg.reply("Usage: !prune (amount)");
+                        msg.getChannel().sendMessage(RolePermissions.noPermission());
                     }
                 }));
     }
 
     public void setServerName(){
-        reg.registerCommand(new D4JCommandBuilder("setservername")
+        reg.registerCommand(new D4JCommandBuilder("setname")
                 .build((args, msg) -> {
-                    if(msg.getAuthor().getID().equals("164909448043823104") && args.size() > 0) {
-                        String name = msg.getContent().substring(14);
+                    if(args.size() > 0) {
+                        String name = msg.getContent().substring(8);
                         msg.getGuild().changeName(name);
                         msg.delete();
                     }
@@ -47,10 +54,10 @@ public class ModeratorCommands extends Commands {
     }
 
     public void setServerDesc(){
-        reg.registerCommand(new D4JCommandBuilder("setserverdesc")
+        reg.registerCommand(new D4JCommandBuilder("setdesc")
                 .build((args, msg) -> {
                     if(args.size() > 0){
-                        String topic = msg.getContent().substring(14);
+                        String topic = msg.getContent().substring(8);
                         msg.getGuild().getChannels().get(0).changeTopic(topic);
                         msg.delete();
                     } else {
@@ -63,7 +70,7 @@ public class ModeratorCommands extends Commands {
     public void shutdown(){
         reg.registerCommand(new D4JCommandBuilder("shutdown")
                 .build((args, msg) -> {
-                    if(msg.getAuthor().getID().equals("164909448043823104"))
+                    if(RolePermissions.isAdmin(msg))
                         msg.getClient().logout();
                 }));
     }
