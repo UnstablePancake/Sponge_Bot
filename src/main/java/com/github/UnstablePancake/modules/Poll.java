@@ -2,6 +2,7 @@ package com.github.UnstablePancake.modules;
 
 import sx.blah.discord.handle.impl.events.ReactionAddEvent;
 import sx.blah.discord.handle.impl.events.ReactionRemoveEvent;
+import sx.blah.discord.handle.obj.IUser;
 import sx.blah.discord.util.DiscordException;
 import sx.blah.discord.util.EmbedBuilder;
 import sx.blah.discord.util.MissingPermissionsException;
@@ -49,7 +50,7 @@ public class Poll {
 
     public static void addVotes(ReactionAddEvent event){
         if(isDefault){
-            if(id.equals(event.getMessage().getID())){
+            if(id != null && id.equals(event.getMessage().getID())){
                 if(event.getReaction().getCustomEmoji().getID().equals("303664389746196480")) {
                     votes[0]++;
                 } else if (event.getReaction().getCustomEmoji().getID().equals("303664478057136138")) {
@@ -58,7 +59,7 @@ public class Poll {
                 update(event);
             }
         } else {
-            if(id.equals(event.getMessage().getID())){
+            if(id != null && id.equals(event.getMessage().getID())){
                 if(event.getReaction().getCustomEmoji().getID().equals("303664389746196480")){
                     votes[0]++;
                 } else if (event.getReaction().getCustomEmoji().getID().equals("303664478057136138")) {
@@ -77,9 +78,9 @@ public class Poll {
         }
     }
 
-    public static void removeVotes(ReactionRemoveEvent event){
+    public static void removeVotes(ReactionRemoveEvent event) throws RateLimitException, DiscordException, MissingPermissionsException {
         if(isDefault){
-            if (id.equals(event.getMessage().getID())) {
+            if (id != null && id.equals(event.getMessage().getID())) {
                 if (event.getReaction().getCustomEmoji().getID().equals("303664389746196480")) {
                     votes[0]--;
                 } else if (event.getReaction().getCustomEmoji().getID().equals("303664478057136138")) {
@@ -88,7 +89,7 @@ public class Poll {
                 update(event);
             }
         } else {
-            if(id.equals(event.getMessage().getID())){
+            if(id != null && id.equals(event.getMessage().getID())){
                 if (event.getReaction().getCustomEmoji().getID().equals("303664389746196480")){
                     votes[0]--;
                 } else if (event.getReaction().getCustomEmoji().getID().equals("303664478057136138")){
@@ -107,7 +108,7 @@ public class Poll {
         }
     }
 
-    public static void update(ReactionRemoveEvent event){
+    public static void update(ReactionRemoveEvent event) throws RateLimitException, DiscordException, MissingPermissionsException {
         if(isDefault){
             try {
                 event.getClient().getMessageByID(id).edit(null, new EmbedBuilder()
@@ -117,7 +118,9 @@ public class Poll {
             } catch (MissingPermissionsException e){
                 e.printStackTrace();
             } catch (RateLimitException e){
-                e.printStackTrace();
+                IUser user = event.getUser();
+                String channel = event.getMessage().getChannel().getID();
+                event.getClient().getChannelByID(channel).sendMessage(user.mention() + " You are voting too fast.");
             } catch (DiscordException e){
                 e.printStackTrace();
             }
@@ -130,7 +133,9 @@ public class Poll {
             } catch (MissingPermissionsException e) {
                 e.printStackTrace();
             } catch (RateLimitException e) {
-                e.printStackTrace();
+                IUser user = event.getUser();
+                String channel = event.getMessage().getChannel().getID();
+                event.getClient().getChannelByID(channel).sendMessage(user.mention() + " You are voting too fast.");
             } catch (DiscordException e) {
                 e.printStackTrace();
             }

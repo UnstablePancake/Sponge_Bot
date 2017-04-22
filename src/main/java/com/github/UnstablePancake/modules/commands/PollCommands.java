@@ -53,7 +53,7 @@ public class PollCommands extends Commands {
                                 .build(), false).getID();
 
                         Poll.setID(id);
-                        for(int i = 0; i < Poll.getCount() - 1; i++){
+                        for(int i = 0; i < Poll.getCount(); i++){
                             msg.getClient().getMessageByID(id).addReaction(Poll.symbol[i]);
                             Thread.sleep(150);
                         }
