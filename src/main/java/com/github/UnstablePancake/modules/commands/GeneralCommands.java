@@ -12,8 +12,7 @@ public class GeneralCommands extends Commands {
     public GeneralCommands(IDiscordClient client){
         super(client);
         ping();
-        announce();
-        talk();
+        avatar();
     }
 
     public void ping(){
@@ -23,38 +22,16 @@ public class GeneralCommands extends Commands {
                 }));
     }
 
-    public void announce(){
-        reg.registerCommand(new D4JCommandBuilder("announce")
+    public void avatar(){
+        reg.registerCommand(new D4JCommandBuilder("avatar")
                 .build((args, msg) -> {
-                    // Change after merge
-                    if(msg.getAuthor().getPermissionsForGuild(msg.getGuild()).contains(Permissions.ADMINISTRATOR)){
-                        if(args.size() > 0){
-                            String message = msg.getContent().substring(9);
-                            String channel = msg.getGuild().getChannels().get(0).getID();
-                            msg.getClient().getChannelByID(channel).sendMessage(null, new EmbedBuilder()
-                                    .withColor(Color.orange)
-                                    .appendField(":loudspeaker: Announcement", message, false)
-                                    .build(), false);
-                        } else {
-                            msg.reply("Usage: .announce (message)");
-                        }
-                    } else {
-                        // Add no permission message;
+                    String rawID = args.get(0);
+                    String id = "";
+                    for(int i = 0; i < rawID.length(); i++){
+                        if(Character.isDigit(rawID.charAt(i)))
+                            id += rawID.charAt(i);
                     }
-                }));
-    }
-
-    public void talk(){
-        reg.registerCommand(new D4JCommandBuilder("talk")
-                .build((args, msg) -> {
-                    // Change after merge
-                    if(msg.getAuthor().getPermissionsForGuild(msg.getGuild()).contains(Permissions.ADMINISTRATOR)){
-                        if(args.size() > 0){
-                            String message = msg.getContent().substring(5);
-                            String channel = msg.getGuild().getChannels().get(0).getID();
-                            msg.getGuild().getChannelByID(channel).sendMessage(message);
-                        }
-                    }
-                }));
+                    msg.getChannel().sendMessage(msg.getClient().getUserByID(id).getAvatarURL());
+        }));
     }
 }
