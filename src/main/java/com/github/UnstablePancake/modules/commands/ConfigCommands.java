@@ -13,7 +13,7 @@ public class ConfigCommands extends Commands {
         setStatus(client);
     }
 
-    public void setStatus(IDiscordClient client){
+    private void setStatus(IDiscordClient client){
         reg.registerCommand(new D4JCommandBuilder("setstatus")
                 .build((args, msg) -> {
                     if(RolePermissions.isAdmin(msg)){

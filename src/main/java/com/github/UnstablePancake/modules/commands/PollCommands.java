@@ -16,7 +16,7 @@ public class PollCommands extends Commands {
         createPollWithOptions();
     }
 
-    public void createPoll(){
+    private void createPoll(){
         reg.registerCommand(new D4JCommandBuilder("poll")
                 .build((args, msg) -> {
                     if(args.size() > 0){
@@ -39,7 +39,7 @@ public class PollCommands extends Commands {
                 }));
     }
 
-    public void createPollWithOptions(){
+    private void createPollWithOptions(){
         reg.registerCommand(new D4JCommandBuilder("polloption")
                 .build((args, msg) -> {
                     if(Poll.isReady(msg.getContent().substring(11)) && args.size() > 0){

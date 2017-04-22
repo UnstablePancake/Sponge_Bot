@@ -16,14 +16,14 @@ public class AudioCommands extends Commands {
         leave();
     }
 
-    public void join(){
+    private void join(){
         reg.registerCommand(new D4JCommandBuilder("join")
                 .build((args, msg) -> {
                     audio.joinChannel(msg.getAuthor().getConnectedVoiceChannels().get(0).getID());
                 }));
     }
 
-    public void leave(){
+    private void leave(){
         reg.registerCommand(new D4JCommandBuilder("leave")
                 .build((args, msg) -> {
                     audio.leaveChannel();

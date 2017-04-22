@@ -15,14 +15,14 @@ public class GeneralCommands extends Commands {
         avatar();
     }
 
-    public void ping(){
+    private void ping(){
         reg.registerCommand(new D4JCommandBuilder("ping")
                 .build((args, msg) -> {
                     msg.getChannel().sendMessage("pong!");
                 }));
     }
 
-    public void avatar(){
+    private void avatar(){
         reg.registerCommand(new D4JCommandBuilder("avatar")
                 .build((args, msg) -> {
                     String rawID = args.get(0);

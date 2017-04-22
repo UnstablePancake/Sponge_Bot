@@ -18,7 +18,7 @@ public class RoleCommands extends Commands {
         remRole();
     }
 
-    public void addRole(){
+    private void addRole(){
         reg.registerCommand(new D4JCommandBuilder("addrole")
                 .build((args, msg) -> {
                     if (RolePermissions.isAdmin(msg)){
@@ -57,7 +57,7 @@ public class RoleCommands extends Commands {
                 }));
     }
 
-    public void remRole(){
+    private void remRole(){
         reg.registerCommand(new D4JCommandBuilder("remrole")
                 .build((args, msg) -> {
                     if(RolePermissions.isAdmin(msg)) {

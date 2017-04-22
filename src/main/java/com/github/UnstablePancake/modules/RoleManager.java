@@ -17,7 +17,7 @@ public class RoleManager {
         createRoles();
     }
 
-    public void createRoles() throws RateLimitException, DiscordException, MissingPermissionsException {
+    private void createRoles() throws RateLimitException, DiscordException, MissingPermissionsException {
         for (Roles r : Roles.values()){
             if (!exists(r)){
                 roleBuilder.withName(r.getName()).withColor(r.getColor()).withPermissions(r.getPermission()).build();
@@ -28,7 +28,7 @@ public class RoleManager {
         }
     }
 
-    public boolean exists(Roles r){
+    private boolean exists(Roles r){
         for(IRole gr : guildRoles){
             if(gr.getName().equals(r.getName()))
                 return true;

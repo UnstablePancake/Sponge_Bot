@@ -14,7 +14,7 @@ public class LuckCommands extends Commands {
         magicConch();
     }
 
-    public void coinFlip(){
+    private void coinFlip(){
         reg.registerCommand(new D4JCommandBuilder("coinflip")
                 .build((args, msg) -> {
                     int random = (int)(Math.random() * 2);
@@ -25,7 +25,7 @@ public class LuckCommands extends Commands {
                 }));
     }
 
-    public void magicConch(){
+    private void magicConch(){
         reg.registerCommand(new D4JCommandBuilder("8ball")
                 .build((args, msg) -> {
                     String[] outcome = {

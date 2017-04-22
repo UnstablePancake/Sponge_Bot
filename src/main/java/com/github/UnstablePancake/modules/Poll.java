@@ -108,7 +108,7 @@ public class Poll {
         }
     }
 
-    public static void update(ReactionRemoveEvent event) throws RateLimitException, DiscordException, MissingPermissionsException {
+    private static void update(ReactionRemoveEvent event) throws RateLimitException, DiscordException, MissingPermissionsException {
         if(isDefault){
             try {
                 event.getClient().getMessageByID(id).edit(null, new EmbedBuilder()
@@ -142,7 +142,7 @@ public class Poll {
         }
     }
 
-    public static void update(ReactionAddEvent event){
+    private static void update(ReactionAddEvent event){
         if(isDefault){
             try {
                 event.getClient().getMessageByID(id).edit(null, new EmbedBuilder()

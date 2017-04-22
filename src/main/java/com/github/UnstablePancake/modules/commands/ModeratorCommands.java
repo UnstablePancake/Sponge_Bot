@@ -21,7 +21,7 @@ public class ModeratorCommands extends Commands {
     }
 
 
-    public void prune(){
+    private void prune(){
         reg.registerCommand(new D4JCommandBuilder("prune")
                 .build((args, msg) -> {
                     int length;
@@ -42,7 +42,7 @@ public class ModeratorCommands extends Commands {
                 }));
     }
 
-    public void setServerName(){
+    private void setServerName(){
         reg.registerCommand(new D4JCommandBuilder("setname")
                 .build((args, msg) -> {
                     if(args.size() > 0) {
@@ -53,7 +53,7 @@ public class ModeratorCommands extends Commands {
                 }));
     }
 
-    public void setServerDesc(){
+    private void setServerDesc(){
         reg.registerCommand(new D4JCommandBuilder("setdesc")
                 .build((args, msg) -> {
                     if(args.size() > 0){
@@ -67,7 +67,7 @@ public class ModeratorCommands extends Commands {
                 }));
     }
 
-    public void shutdown(){
+    private void shutdown(){
         reg.registerCommand(new D4JCommandBuilder("shutdown")
                 .build((args, msg) -> {
                     if(RolePermissions.isAdmin(msg))
