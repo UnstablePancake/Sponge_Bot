@@ -1,7 +1,7 @@
 package com.github.UnstablePancake.modules.commands;
 
 import co.kaioru.distort.d4j.command.D4JCommandBuilder;
-import com.github.UnstablePancake.modules.Roles.RolePermissions;
+import com.github.UnstablePancake.modules.roles.RolePermissions;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.handle.obj.Status;
 

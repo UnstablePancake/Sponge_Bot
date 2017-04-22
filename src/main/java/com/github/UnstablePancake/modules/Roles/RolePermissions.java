@@ -1,4 +1,4 @@
-package com.github.UnstablePancake.modules.Roles;
+package com.github.UnstablePancake.modules.roles;
 import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.handle.obj.Permissions;
 import java.util.EnumSet;
