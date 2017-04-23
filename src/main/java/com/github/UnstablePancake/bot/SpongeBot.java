@@ -22,12 +22,12 @@ public class SpongeBot {
 
     public static void main(String[] args){
         try {
-            JSONParser.parse("config.json");
+            JSONHandler.parse("config.json");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        JSONObject obj = new JSONObject(JSONParser.jsonData);
+        JSONObject obj = new JSONObject(JSONHandler.jsonData);
         INSTANCE = login(obj.getString("token"));
     }
 
@@ -59,6 +59,7 @@ public class SpongeBot {
             moderator = new Moderator(client, client.getChannels().get(0));
             roleManager = new RoleManager(client.getGuilds().get(0));
             new CommandHandler(client);
+            new Points();
             System.out.println("Spongebot is ready");
         }
 

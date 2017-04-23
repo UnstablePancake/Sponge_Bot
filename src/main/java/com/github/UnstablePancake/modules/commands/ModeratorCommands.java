@@ -70,6 +70,7 @@ public class ModeratorCommands extends Commands {
         reg.registerCommand(new D4JCommandBuilder("shutdown")
                 .build((args, msg) -> {
                     if(RolePermissions.isAdmin(msg))
+                        msg.getChannel().sendMessage("Shutting down...");
                         msg.getClient().logout();
         }));
     }
