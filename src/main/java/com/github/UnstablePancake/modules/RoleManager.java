@@ -21,9 +21,9 @@ public class RoleManager {
         for (Roles r : Roles.values()){
             if (!exists(r)){
                 roleBuilder.withName(r.getName()).withColor(r.getColor()).withPermissions(r.getPermission()).build();
-                System.out.println("+" + r.getName() + " was created.");
+                System.out.println("[Role] + " + r.getName() + " was created.");
             } else {
-                System.out.println("-" + r.getName() + " already exists. Role was not created");
+                System.out.println("[Role] " + r.getName() + " already exists. Role was not created");
             }
         }
     }
