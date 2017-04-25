@@ -3,29 +3,26 @@ package com.github.UnstablePancake.bot;
 import org.json.JSONException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.io.*;
-import java.util.ArrayList;
+import java.net.URL;
 
 public class JSONHandler {
 
     public static String jsonData = "";
 
-    public static void createJSON(ArrayList<String> names, ArrayList<String> id, ArrayList<Integer> points) throws IOException {
+    public static void createJSON() throws IOException {
         FileWriter file = new FileWriter("userData.json");
         JSONArray array = new JSONArray();
-        for(int i = 0; i < id.size(); i++) {
+        for(int i = 0; i < UserData.ids.size(); i++) {
             JSONObject obj = new JSONObject();
-            obj.put("name", names.get(i));
-            obj.put("id", id.get(i));
-            obj.put("points", points.get(i));
+            obj.put("name", UserData.names.get(i));
+            obj.put("id", UserData.ids.get(i));
+            obj.put("points", UserData.points.get(i));
             array.add(obj);
         }
         file.write(array.toJSONString());
         file.flush();
-        System.out.println("userData.json has been updated");
     }
 
     public static void parse(String config) throws FileNotFoundException, JSONException {
@@ -50,19 +47,21 @@ public class JSONHandler {
         }
     }
 
-    public static void syncData(){
-        JSONParser parser = new JSONParser();
+    public static String readUrl(String urlString) throws Exception {
+        BufferedReader reader = null;
         try {
-            Object obj = parser.parse(new FileReader("userData.json"));
+            URL url = new URL(urlString);
+            reader = new BufferedReader(new InputStreamReader(url.openStream()));
+            StringBuffer buffer = new StringBuffer();
+            int read;
+            char[] chars = new char[1024];
+            while ((read = reader.read(chars)) != -1)
+                buffer.append(chars, 0, read);
 
-            JSONObject jsonObject = (JSONObject)obj;
-            JSONArray data = (JSONArray)jsonObject.get("Eric");
-            System.out.println(data);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
+            return buffer.toString();
+        } finally {
+            if (reader != null)
+                reader.close();
         }
     }
 }

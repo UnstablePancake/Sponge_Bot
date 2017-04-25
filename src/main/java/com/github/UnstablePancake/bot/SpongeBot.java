@@ -1,6 +1,7 @@
 package com.github.UnstablePancake.bot;
 
 import com.github.UnstablePancake.modules.*;
+import com.github.UnstablePancake.modules.games.trivia.Trivia;
 import org.json.JSONObject;
 import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
@@ -59,8 +60,10 @@ public class SpongeBot {
             moderator = new Moderator(client, client.getChannels().get(0));
             roleManager = new RoleManager(client.getGuilds().get(0));
             new CommandHandler(client);
-            new Points();
-            System.out.println("Spongebot is ready");
+            new UserData(client);
+            new Trivia(client);
+            Schedule.updateUserData();
+            System.out.println("Spongebot is ready.");
         }
 
         @EventSubscriber
