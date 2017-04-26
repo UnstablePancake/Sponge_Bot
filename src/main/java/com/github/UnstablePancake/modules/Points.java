@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class Points {
 
+    private static ArrayList<String> names = UserData.names;
     private static ArrayList<String> ids = UserData.ids;
     private static ArrayList<Integer> points = UserData.points;
 
@@ -37,5 +38,17 @@ public class Points {
                 credits = getCredits(i);
         }
         return credits;
+    }
+
+    public static String getTopPlayer(){
+        String top = "Not found.";
+        int high = 0;
+        for(int i = 0; i < points.size(); i++){
+            if(high < points.get(i)){
+                high = points.get(i);
+                top = names.get(i);
+            }
+        }
+        return top;
     }
 }
