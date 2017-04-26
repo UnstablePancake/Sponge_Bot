@@ -18,6 +18,7 @@ public class UserData {
 
     public static ArrayList<String> names = new ArrayList<>();
     public static ArrayList<String> ids = new ArrayList<>();
+    public static ArrayList<String> joinDate = new ArrayList<>();
     public static ArrayList<Integer> points = new ArrayList<>();
 
     public UserData(IDiscordClient client){
@@ -33,7 +34,7 @@ public class UserData {
         try {
             obj = parser.parse(new FileReader("userData.json"));
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("[Data] Error: The system cannot find the file specified, creating file");
         } catch (ParseException e) {
             System.out.println("[Data] Error: File userData.json is empty.");
         }
@@ -41,9 +42,9 @@ public class UserData {
             JSONArray jsonArray = (JSONArray) obj;
             for (int i = 0; i < jsonArray.size(); i++) {
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-                names.add((String) jsonObject.get("name"));
-                ids.add((String) jsonObject.get("id"));
-                points.add(((Long) jsonObject.get("points")).intValue());
+                names.add((String)jsonObject.get("name"));
+                ids.add((String)jsonObject.get("id"));
+                points.add(((Long)jsonObject.get("points")).intValue());
             }
         }
     }
@@ -62,6 +63,7 @@ public class UserData {
                     names.set(getIndex(u.getID()), u.getDisplayName(guild));
                 }
             }
+
         }
         try {
             JSONHandler.createJSON();
@@ -91,8 +93,6 @@ public class UserData {
         int index = UserData.getIndex(user.getID());
         return index;
     }
-
-
 
     private class UpdateHandler {
 

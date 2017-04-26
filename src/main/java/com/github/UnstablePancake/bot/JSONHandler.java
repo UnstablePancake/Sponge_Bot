@@ -3,7 +3,6 @@ package com.github.UnstablePancake.bot;
 import org.json.JSONException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
 import java.io.*;
 import java.net.URL;
 
@@ -23,7 +22,9 @@ public class JSONHandler {
         }
         file.write(array.toJSONString());
         file.flush();
+        System.out.println("[Data] File userData.json has been created");
     }
+
 
     public static void parse(String config) throws FileNotFoundException, JSONException {
 

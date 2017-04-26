@@ -8,7 +8,7 @@ import static java.util.concurrent.TimeUnit.*;
 
 public class Schedule {
 
-    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    public static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     public static void updateUserData(){
         final Runnable userData = () -> {

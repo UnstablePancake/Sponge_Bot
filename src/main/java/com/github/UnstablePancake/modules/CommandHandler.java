@@ -8,14 +8,17 @@ import java.util.LinkedList;
 public class CommandHandler {
 
     public CommandHandler(IDiscordClient client){
+        new APICommands(client);
         new AudioCommands(client);
         new ConfigCommands(client);
+        new GambleCommands(client);
         new GeneralCommands(client);
         new LuckCommands(client);
         new ModeratorCommands(client);
         new PointCommands(client);
         new PollCommands(client);
         new RoleCommands(client);
+        new TriviaCommands(client);
     }
 
     public static String parseMention(LinkedList<String> args){
