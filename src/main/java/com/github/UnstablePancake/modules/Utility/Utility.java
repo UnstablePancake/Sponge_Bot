@@ -1,4 +1,4 @@
-package com.github.UnstablePancake.modules.games;
+package com.github.UnstablePancake.modules.Utility;
 
 public class Utility {
 
