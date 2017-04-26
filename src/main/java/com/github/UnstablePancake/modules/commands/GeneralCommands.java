@@ -1,7 +1,11 @@
 package com.github.UnstablePancake.modules.commands;
 
 import co.kaioru.distort.d4j.command.D4JCommandBuilder;
+import com.github.UnstablePancake.modules.roles.RolePermissions;
 import sx.blah.discord.api.IDiscordClient;
+import sx.blah.discord.util.EmbedBuilder;
+
+import java.awt.*;
 
 public class GeneralCommands extends Commands {
 
@@ -9,6 +13,8 @@ public class GeneralCommands extends Commands {
         super(client);
         ping();
         avatar();
+        announce();
+        talk();
     }
 
     private void ping(){
@@ -28,6 +34,37 @@ public class GeneralCommands extends Commands {
                             id += rawID.charAt(i);
                     }
                     msg.getChannel().sendMessage(msg.getClient().getUserByID(id).getAvatarURL());
+        }));
+    }
+
+    private void announce(){
+        reg.registerCommand(new D4JCommandBuilder("announce")
+                .build((args, msg) -> {
+                    if(RolePermissions.isAdmin(msg)){
+                        if(args.size() > 0){
+                            String message = msg.getContent().substring(9);
+                            String channel = msg.getGuild().getChannels().get(0).getID();
+                            msg.getClient().getChannelByID(channel).sendMessage(null, new EmbedBuilder()
+                                    .withColor(Color.orange)
+                                    .appendField(":loudspeaker: Announcement", message, false)
+                                    .build(), false);
+                        } else {
+                            msg.reply("Usage: .announce (message)");
+                        }
+                    }
+        }));
+    }
+
+    private void talk(){
+        reg.registerCommand(new D4JCommandBuilder("say")
+                .build((args, msg) -> {
+                    if(RolePermissions.isAdmin(msg)){
+                        if(args.size() > 0){
+                            String message = msg.getContent().substring(5);
+                            String channel = msg.getGuild().getChannels().get(0).getID();
+                            msg.getGuild().getChannelByID(channel).sendMessage(message);
+                        }
+                    }
         }));
     }
 }
