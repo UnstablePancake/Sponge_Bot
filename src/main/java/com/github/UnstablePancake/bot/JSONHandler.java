@@ -1,5 +1,6 @@
 package com.github.UnstablePancake.bot;
 
+import com.github.UnstablePancake.modules.Utility.Ansi;
 import org.json.JSONException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -22,7 +23,7 @@ public class JSONHandler {
         }
         file.write(array.toJSONString());
         file.flush();
-        System.out.println("[Data] File userData.json has been created");
+        System.out.println(Ansi.color("[Data] File userData.json has been created", Ansi.GREEN));
     }
 
 

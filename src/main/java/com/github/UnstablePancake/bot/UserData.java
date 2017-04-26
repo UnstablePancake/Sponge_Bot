@@ -1,5 +1,6 @@
 package com.github.UnstablePancake.bot;
 
+import com.github.UnstablePancake.modules.Utility.Ansi;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -34,9 +35,9 @@ public class UserData {
         try {
             obj = parser.parse(new FileReader("userData.json"));
         } catch (IOException e) {
-            System.out.println("[Data] Error: The system cannot find the file specified, creating file");
+            System.out.println(Ansi.color("[Data] Error: The system cannot find the file specified, creating file", Ansi.RED));
         } catch (ParseException e) {
-            System.out.println("[Data] Error: File userData.json is empty.");
+            System.out.println(Ansi.color("[Data] Error: File userData.json is empty.", Ansi.RED));
         }
         if(obj != null){
             JSONArray jsonArray = (JSONArray) obj;
@@ -68,9 +69,9 @@ public class UserData {
         try {
             JSONHandler.createJSON();
         } catch (IOException e) {
-            System.out.println("[Data] Error: userData.json could not be created.");
+            System.out.println(Ansi.color("[Data] Error: userData.json could not be created.", Ansi.RED));
         }
-        System.out.println("[Data] Data has been updated.");
+        System.out.println(Ansi.color("[Data] Data has been updated.", Ansi.GREEN));
     }
 
     private boolean isFound(IUser user){
