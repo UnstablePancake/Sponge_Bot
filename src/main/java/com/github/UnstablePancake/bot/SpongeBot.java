@@ -63,13 +63,7 @@ public class SpongeBot {
             new UserData(client);
             new Trivia(client);
             Schedule.updateUserData();
-            System.out.println("Spongebot is ready.");
-        }
-
-        @EventSubscriber
-        public void onMessageReceivedEvent(MessageReceivedEvent event) throws RateLimitException, DiscordException, MissingPermissionsException {
-            if (event.getMessage().getChannel().getID().equals(client.getChannels().get(0)))
-                moderator.recordMessage(event);
+            System.out.println("Sponge[Bot] is ready.");
         }
 
         @EventSubscriber
