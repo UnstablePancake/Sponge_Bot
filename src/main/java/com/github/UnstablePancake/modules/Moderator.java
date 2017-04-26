@@ -1,9 +1,12 @@
 package com.github.UnstablePancake.modules;
 
 import sx.blah.discord.api.IDiscordClient;
+import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
 import sx.blah.discord.handle.obj.IChannel;
+import sx.blah.discord.util.DiscordException;
 import sx.blah.discord.util.MessageList;
+import sx.blah.discord.util.MissingPermissionsException;
 import sx.blah.discord.util.RateLimitException;
 
 public class Moderator {
@@ -33,5 +36,14 @@ public class Moderator {
 
     public MessageList getMessageList(){
         return messageList;
+    }
+
+    private class EventHandler {
+
+        @EventSubscriber
+        public void onMessageReceivedEvent(MessageReceivedEvent event) throws RateLimitException, DiscordException, MissingPermissionsException {
+            if (event.getMessage().getChannel().getID().equals(client.getChannels().get(0)))
+                recordMessage(event);
+        }
     }
 }
