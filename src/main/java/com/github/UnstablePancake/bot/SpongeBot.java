@@ -19,7 +19,7 @@ public class SpongeBot {
     public static IDiscordClient client;
 
     public static Moderator moderator;
-    public RoleManager roleManager;
+    public Role roleManager;
 
     public static void main(String[] args){
         try {
@@ -58,7 +58,7 @@ public class SpongeBot {
         @EventSubscriber
         public void onReadyEvent(ReadyEvent event) throws RateLimitException, DiscordException, MissingPermissionsException {
             moderator = new Moderator(client, client.getChannels().get(0));
-            roleManager = new RoleManager(client.getGuilds().get(0));
+            roleManager = new Role(client.getGuilds().get(0));
             new CommandHandler(client);
             new UserData(client);
             new Trivia(client);
