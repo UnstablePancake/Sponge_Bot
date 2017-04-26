@@ -1,7 +1,7 @@
 package com.github.UnstablePancake.modules.games.gamble;
 
 import com.github.UnstablePancake.bot.UserData;
-import com.github.UnstablePancake.modules.games.Utility;
+import com.github.UnstablePancake.modules.Utility.Utility;
 import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.handle.obj.IUser;
 import sx.blah.discord.util.DiscordException;

@@ -2,7 +2,7 @@ package com.github.UnstablePancake.modules.games.trivia;
 
 import com.github.UnstablePancake.bot.JSONHandler;
 import com.github.UnstablePancake.modules.Points;
-import com.github.UnstablePancake.modules.games.Utility;
+import com.github.UnstablePancake.modules.Utility.Utility;
 import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

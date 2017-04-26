@@ -2,7 +2,7 @@ package com.github.UnstablePancake.modules.commands;
 
 import co.kaioru.distort.d4j.command.D4JCommandBuilder;
 import com.github.UnstablePancake.bot.UserData;
-import com.github.UnstablePancake.modules.games.Utility;
+import com.github.UnstablePancake.modules.Utility.Utility;
 import com.github.UnstablePancake.modules.games.gamble.Gamble;
 import org.apache.commons.lang3.StringUtils;
 import sx.blah.discord.api.IDiscordClient;
