@@ -18,7 +18,7 @@ public class Points {
         }
     }
 
-    public static int getCredits(int index){
+    private static int getCredits(int index){
         return points.get(index);
     }
 
