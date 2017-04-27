@@ -29,8 +29,10 @@ public class PointCommands extends Commands {
                         msg.getChannel().sendMessage("**" + name + "** has **" + Points.getCredits(user) + "** points");
                     } else {
                         String id = CommandHandler.parseMention(args);
-                        String name = msg.getGuild().getUserByID(id).getDisplayName(msg.getGuild());
-                        msg.getChannel().sendMessage("**" + name + "** has **" + Points.getCredits(id) + "** points");
+                        if(CommandHandler.isValidMention(args) && !id.equals("@everyone")){
+                            String name = msg.getGuild().getUserByID(id).getDisplayName(msg.getGuild());
+                            msg.getChannel().sendMessage("**" + name + "** has **" + Points.getCredits(id) + "** points");
+                        }
                     }
                 }));
     }
@@ -42,28 +44,31 @@ public class PointCommands extends Commands {
                         msg.reply("Please enter the amount of points you want to transfer");
                         return;
                     }
-                    String points = args.get(1);
-                    String sendID = msg.getAuthor().getID();
-                    int sendPointsIndex = UserData.getIndex(sendID);
 
-                    if (StringUtils.isNumeric(points)) {
-                        if (UserData.points.get(sendPointsIndex) >= Integer.parseInt(points)){
-                            String receiveID = CommandHandler.parseMention(args);
-                            int receivePointsIndex = UserData.getIndex(receiveID);
+                    if(args.size() == 1) {
+                        String points = args.get(1);
+                        String sendID = msg.getAuthor().getID();
+                        int sendPointsIndex = UserData.getIndex(sendID);
 
-                            int initialSend = UserData.points.get(sendPointsIndex);
-                            int initialReceive = UserData.points.get(receivePointsIndex);
+                        if (StringUtils.isNumeric(points)) {
+                            if (UserData.points.get(sendPointsIndex) >= Integer.parseInt(points)) {
+                                String receiveID = CommandHandler.parseMention(args);
+                                int receivePointsIndex = UserData.getIndex(receiveID);
 
-                            UserData.points.set(sendPointsIndex, initialSend - Integer.parseInt(points));
-                            UserData.points.set(receivePointsIndex, initialReceive + Integer.parseInt(points));
+                                int initialSend = UserData.points.get(sendPointsIndex);
+                                int initialReceive = UserData.points.get(receivePointsIndex);
 
-                            IUser receiver = msg.getGuild().getUserByID(receiveID);
-                            msg.getChannel().sendMessage(receiver.mention() + " You have received **" + points + "** points from **"
-                                    + msg.getGuild().getUserByID(sendID).getDisplayName(msg.getGuild()) + "**");
-                        } else
-                            msg.reply("You do not have enough points");
-                    } else {
-                        msg.reply("Invalid point value.");
+                                UserData.points.set(sendPointsIndex, initialSend - Integer.parseInt(points));
+                                UserData.points.set(receivePointsIndex, initialReceive + Integer.parseInt(points));
+
+                                IUser receiver = msg.getGuild().getUserByID(receiveID);
+                                msg.getChannel().sendMessage(receiver.mention() + " You have received **" + points + "** points from **"
+                                        + msg.getGuild().getUserByID(sendID).getDisplayName(msg.getGuild()) + "**");
+                            } else
+                                msg.reply("You do not have enough points");
+                        } else {
+                            msg.reply("Invalid point value.");
+                        }
                     }
         }));
     }
@@ -73,13 +78,21 @@ public class PointCommands extends Commands {
                 .build((args, msg) -> {
                     if(RolePermissions.isAdmin(msg)){
                         String user = CommandHandler.parseMention(args);
-                        if (args.size() > 0) {
+                        if(args.size() > 0){
                             String points = args.get(1);
-                            if (StringUtils.isNumeric(points)) {
-                                Points.addCredits(user, Integer.parseInt(points));
+                            if(CommandHandler.isValidMention(args)) {
+                                if (StringUtils.isNumeric(points)) {
+                                    Points.addCredits(user, Integer.parseInt(points));
+
+                                    msg.getChannel().sendMessage(msg.getGuild().getUserByID(user).mention() + " **" + points
+                                            + "** points have been added to your account");
+                                }
+                            } else if(CommandHandler.isValidMentionEveryone(args)){
+                                for(String id : UserData.ids){
+                                    Points.addCredits(id, Integer.parseInt(points));
+                                }
+                                msg.getChannel().sendMessage("@everyone **" + points + " points ** have been added to **everybody's** account");
                             }
-                            msg.getChannel().sendMessage(msg.getGuild().getUserByID(user).mention() + " **" + points
-                                    + "** have been added to your account");
                         }
                     }
         }));
