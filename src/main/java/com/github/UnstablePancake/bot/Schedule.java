@@ -1,5 +1,7 @@
 package com.github.UnstablePancake.bot;
 
+import com.github.UnstablePancake.modules.Utility.Ansi;
+
 import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -16,7 +18,7 @@ public class Schedule {
                 System.out.println("[Data] Writing userDat.json");
                 JSONHandler.createJSON();
             } catch (IOException e) {
-                System.out.println("[Data] Error: userData.json could not be updated");
+                System.out.println(Ansi.color("[Data] Error: userData.json could not be updated", Ansi.GREEN));
             }
         };
 
