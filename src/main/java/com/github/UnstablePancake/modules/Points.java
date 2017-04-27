@@ -40,6 +40,19 @@ public class Points {
         return credits;
     }
 
+    public static void addCredits(String id, int amount){
+        int index = -1;
+        for(int i = 0; i < ids.size(); i++){
+            if(ids.get(i).equals(id)){
+                index = i;
+            }
+        }
+        if(index != -1){
+            int initialCredits = points.get(index);
+            points.set(index, initialCredits + amount);
+        }
+    }
+
     public static String getTopPlayer(){
         String top = "Not found.";
         int high = 0;

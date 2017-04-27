@@ -1,12 +1,11 @@
 package com.github.UnstablePancake.modules.commands;
 
 import co.kaioru.distort.d4j.command.D4JCommandBuilder;
-import co.kaioru.distort.d4j.module.DistortD4JModule;
 import com.github.UnstablePancake.bot.UserData;
 import com.github.UnstablePancake.modules.CommandHandler;
 import com.github.UnstablePancake.modules.Points;
+import com.github.UnstablePancake.modules.roles.RolePermissions;
 import org.apache.commons.lang3.StringUtils;
-import org.eclipse.jetty.util.StringUtil;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.handle.obj.IUser;
 
@@ -17,6 +16,7 @@ public class PointCommands extends Commands {
         D4JModule.getListener().setPrefix("$");
         getPoints();
         transferMoney();
+        addPoints();
         leaderboard();
     }
 
@@ -68,7 +68,24 @@ public class PointCommands extends Commands {
         }));
     }
 
-    private void leaderboard() {
+    private void addPoints(){
+        reg.registerCommand(new D4JCommandBuilder("addpoints")
+                .build((args, msg) -> {
+                    if(RolePermissions.isAdmin(msg)){
+                        String user = CommandHandler.parseMention(args);
+                        if (args.size() > 0) {
+                            String points = args.get(1);
+                            if (StringUtils.isNumeric(points)) {
+                                Points.addCredits(user, Integer.parseInt(points));
+                            }
+                            msg.getChannel().sendMessage(msg.getGuild().getUserByID(user).mention() + " **" + points
+                                    + "** have been added to your account");
+                        }
+                    }
+        }));
+    }
+
+    private void leaderboard(){
         reg.registerCommand(new D4JCommandBuilder("leaderboard")
                 .build((args, msg) -> {
                     msg.getChannel().sendMessage("**" + Points.getTopPlayer() + "** has the most points.");
