@@ -1,4 +1,4 @@
-package com.github.UnstablePancake.modules.games.gamble;
+package com.github.UnstablePancake.modules.games.points;
 
 import com.github.UnstablePancake.bot.UserData;
 import com.github.UnstablePancake.modules.Utility.Utility;
@@ -10,12 +10,15 @@ import sx.blah.discord.util.RateLimitException;
 
 public class Gamble {
 
+    public static final double RATE = .7;
+
     public static void gamble(IUser user, int amount, int random){
+
         int index = UserData.getIndex(user);
         int points = UserData.points.get(index);
 
-        if(random == 0){
-            UserData.points.set(index, points + (amount * 2));
+        if(random % 2 == 0){
+            UserData.points.set(index, points + (int)(amount * RATE));
         } else {
             UserData.points.set(index, points - amount);
         }
