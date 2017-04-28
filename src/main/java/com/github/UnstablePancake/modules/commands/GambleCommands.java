@@ -39,6 +39,8 @@ public class GambleCommands extends Commands {
                             Gamble.gamble(user, points, random);
                         } else if (args.get(0).equals("half")) {
                             points /= 2;
+                            if(points == 0)
+                                points = 1;
                             Gamble.gamble(user, points, random);
                         } else if (StringUtils.isNumeric(args.get(0))) {
                             points = Integer.parseInt(args.get(0));
@@ -48,10 +50,13 @@ public class GambleCommands extends Commands {
                         }
 
                         if(args.get(0).equals("all") || args.get(0).equals("half") || StringUtils.isNumeric(args.get(0))){
-                            if (random % 2 == 0) {
+                            if (random % 2 == 0){
+                                int pointsFinal = (int)(points * Gamble.RATE);
+                                if(pointsFinal == 0)
+                                    pointsFinal = 1;
                                 msg.getChannel().sendMessage(null, new EmbedBuilder()
                                         .withColor(new Color(74, 185, 185))
-                                        .appendField(":game_die: You won! | `Ticket #" + random + "` ", "You won **" + (int) (points * Gamble.RATE) + "** points.", false)
+                                        .appendField(":game_die: You won! | `Ticket #" + random + "` ", "You won **" + pointsFinal + "** points.", false)
                                         .withFooterIcon(user.getAvatarURL())
                                         .withFooterText("Total points: " + UserData.points.get(index))
                                         .build(), false);
