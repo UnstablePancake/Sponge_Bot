@@ -1,7 +1,6 @@
 package com.github.UnstablePancake.bot;
 
 import com.github.UnstablePancake.modules.Utility.Ansi;
-
 import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
