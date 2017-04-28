@@ -3,7 +3,7 @@ package com.github.UnstablePancake.modules.commands;
 import co.kaioru.distort.d4j.command.D4JCommandBuilder;
 import com.github.UnstablePancake.bot.UserData;
 import com.github.UnstablePancake.modules.CommandHandler;
-import com.github.UnstablePancake.modules.Points;
+import com.github.UnstablePancake.modules.games.points.Points;
 import com.github.UnstablePancake.modules.roles.RolePermissions;
 import org.apache.commons.lang3.StringUtils;
 import sx.blah.discord.api.IDiscordClient;
@@ -45,7 +45,7 @@ public class PointCommands extends Commands {
                         return;
                     }
 
-                    if(args.size() == 1) {
+                    if(args.size() == 2) {
                         String points = args.get(1);
                         String sendID = msg.getAuthor().getID();
                         int sendPointsIndex = UserData.getIndex(sendID);
@@ -78,7 +78,7 @@ public class PointCommands extends Commands {
                 .build((args, msg) -> {
                     if(RolePermissions.isAdmin(msg)){
                         String user = CommandHandler.parseMention(args);
-                        if(args.size() > 0){
+                        if(args.size() == 2){
                             String points = args.get(1);
                             if(CommandHandler.isValidMention(args)) {
                                 if (StringUtils.isNumeric(points)) {

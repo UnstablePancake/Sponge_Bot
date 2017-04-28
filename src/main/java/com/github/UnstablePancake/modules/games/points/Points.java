@@ -1,4 +1,4 @@
-package com.github.UnstablePancake.modules;
+package com.github.UnstablePancake.modules.games.points;
 
 import com.github.UnstablePancake.bot.UserData;
 import com.github.UnstablePancake.modules.games.trivia.Trivia;
@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class Points {
 
+    // remove variables
     private static ArrayList<String> names = UserData.names;
     private static ArrayList<String> ids = UserData.ids;
     private static ArrayList<Integer> points = UserData.points;
@@ -51,6 +52,17 @@ public class Points {
             int initialCredits = points.get(index);
             points.set(index, initialCredits + amount);
         }
+    }
+
+    public static boolean hasEnoughMoney(IUser user, int price){
+        String userID = user.getID();
+        for(int i = 0; i < UserData.ids.size(); i++){
+            if(userID.equals(UserData.ids.get(i))){
+                if(UserData.points.get(i) >= price)
+                    return true;
+            }
+        }
+        return false;
     }
 
     public static String getTopPlayer(){
