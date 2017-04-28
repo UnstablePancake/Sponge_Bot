@@ -19,8 +19,8 @@ public class UserData {
 
     public static ArrayList<String> names = new ArrayList<>();
     public static ArrayList<String> ids = new ArrayList<>();
-    public static ArrayList<String> joinDate = new ArrayList<>();
     public static ArrayList<Integer> points = new ArrayList<>();
+    public static ArrayList<Integer> trophies = new ArrayList<>();
 
     public UserData(IDiscordClient client){
         syncData();
@@ -40,12 +40,18 @@ public class UserData {
             System.out.println(Ansi.color("[Data] Error: File userData.json is empty.", Ansi.RED));
         }
         if(obj != null){
-            JSONArray jsonArray = (JSONArray) obj;
-            for (int i = 0; i < jsonArray.size(); i++) {
+            JSONArray jsonArray = (JSONArray)obj;
+            for(int i = 0; i < jsonArray.size(); i++) {
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-                names.add((String)jsonObject.get("name"));
-                ids.add((String)jsonObject.get("id"));
-                points.add(((Long)jsonObject.get("points")).intValue());
+
+                if(jsonObject.get("name") != null)
+                    names.add((String)jsonObject.get("name"));
+                if(jsonObject.get("id") != null)
+                    ids.add((String)jsonObject.get("id"));
+                if(jsonObject.get("points") != null)
+                    points.add(((Long)jsonObject.get("points")).intValue());
+                if(jsonObject.get("trophies") != null)
+                    trophies.add(Math.toIntExact((Long)jsonObject.get("trophies")));
             }
         }
     }
@@ -58,14 +64,15 @@ public class UserData {
                 names.add(u.getDisplayName(guild));
                 ids.add(u.getID());
                 points.add(0);
+                trophies.add(0);
             } else if(isFound(u)){
                 String name = names.get(getIndex(u.getID()));
                 if(!name.equals(u.getDisplayName(guild))){
                     names.set(getIndex(u.getID()), u.getDisplayName(guild));
                 }
             }
-
         }
+
         try {
             JSONHandler.createJSON();
         } catch (IOException e) {

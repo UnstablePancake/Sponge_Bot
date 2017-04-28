@@ -11,7 +11,7 @@ public class MarketCommands extends Commands{
     public MarketCommands(IDiscordClient client) {
         super(client);
         D4JModule.getListener().setPrefix("$buy ");
-        //buyTrophy();
+        buyTrophy();
     }
 
     private void buyTrophy(){
