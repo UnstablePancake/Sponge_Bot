@@ -18,7 +18,12 @@ public class Gamble {
         int points = UserData.points.get(index);
 
         if(random % 2 == 0){
-            UserData.points.set(index, points + (int)(amount * RATE));
+            int payout = (int)(amount * RATE);
+
+            if((int)(amount * RATE) < 1)
+                payout = 1;
+
+            UserData.points.set(index, points + payout);
         } else {
             UserData.points.set(index, points - amount);
         }
