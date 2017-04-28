@@ -19,6 +19,8 @@ public class JSONHandler {
             obj.put("name", UserData.names.get(i));
             obj.put("id", UserData.ids.get(i));
             obj.put("points", UserData.points.get(i));
+            obj.put("trophies", UserData.trophies.get(i));
+
             array.add(obj);
         }
         file.write(array.toJSONString());
