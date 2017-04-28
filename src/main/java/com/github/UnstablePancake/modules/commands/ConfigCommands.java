@@ -25,6 +25,6 @@ public class ConfigCommands extends Commands {
                     } else {
                         msg.getChannel().sendMessage(RolePermissions.noPermission());
                     }
-                }));
+        }));
     }
 }
