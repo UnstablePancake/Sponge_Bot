@@ -38,7 +38,7 @@ public class CommandHandler {
     public static boolean isValidMention(LinkedList<String> args){
         String mention = args.get(0);
         if(mention.startsWith("<@")){
-            parseMention(args);
+            mention = parseMention(args);
             for(String id : UserData.ids){
                 if(id.equals(mention))
                     return true;
@@ -54,12 +54,12 @@ public class CommandHandler {
     public static boolean isValidMentionEveryone(LinkedList<String> args){
         String mention = args.get(0);
         if(mention.startsWith("<@")){
-            parseMention(args);
+            mention = parseMention(args);
             for(String id : UserData.ids){
                 if(id.equals(mention))
                     return true;
             }
         }
-        return false;
+        return mention.equals("@everyone");
     }
 }
