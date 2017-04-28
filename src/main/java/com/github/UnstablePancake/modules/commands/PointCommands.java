@@ -26,12 +26,14 @@ public class PointCommands extends Commands {
                     if (args.size() == 0) {
                         IUser user = msg.getAuthor();
                         String name = user.getDisplayName(msg.getGuild());
-                        msg.getChannel().sendMessage("**" + name + "** has **" + Points.getCredits(user) + "** points");
+                        msg.getChannel().sendMessage("**" + name + "** has **" + Points.getCredits(user)
+                                + "** points\n :trophy: x " + Points.getTrophies(user.getID()));
                     } else {
                         String id = CommandHandler.parseMention(args);
                         if(CommandHandler.isValidMention(args) && !id.equals("@everyone")){
                             String name = msg.getGuild().getUserByID(id).getDisplayName(msg.getGuild());
-                            msg.getChannel().sendMessage("**" + name + "** has **" + Points.getCredits(id) + "** points");
+                            msg.getChannel().sendMessage("**" + name + "** has **" + Points.getCredits(id)
+                                    + "** points\n:trophy: x " + Points.getTrophies(name));
                         }
                     }
                 }));
