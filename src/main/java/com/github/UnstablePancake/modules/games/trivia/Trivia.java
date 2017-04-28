@@ -1,7 +1,7 @@
 package com.github.UnstablePancake.modules.games.trivia;
 
 import com.github.UnstablePancake.bot.JSONHandler;
-import com.github.UnstablePancake.modules.Points;
+import com.github.UnstablePancake.modules.games.points.Points;
 import com.github.UnstablePancake.modules.Utility.Utility;
 import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONArray;
@@ -31,32 +31,44 @@ public class Trivia {
         dispatcher.registerListener(new EventHandler());
     }
 
-    public static void createTrivia(){
+    public static void createTrivia() {
         inProgress = true;
         String json = null;
-        try {
-            json = JSONHandler.readUrl("http://jservice.io/api/random");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        do {
+            try {
+                json = JSONHandler.readUrl("http://jservice.io/api/random");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-        JSONParser parser = new JSONParser();
+            JSONParser parser = new JSONParser();
 
-        try {
-            list = (JSONArray) parser.parse(json);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+            try {
+                list = (JSONArray) parser.parse(json);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
-        int random = Utility.random(list.size());
-        JSONObject obj = (JSONObject)list.get(random);
-        question = (String)obj.get("question");
-        answer = fixAnswer((String)obj.get("answer"));
+            int random = Utility.random(list.size());
+            JSONObject obj = (JSONObject) list.get(random);
+            question = (String) obj.get("question");
+            answer = fixAnswer((String)obj.get("answer"));
+        } while (isInvalidAnswer(answer));
+
         hint = createHint();
     }
 
+    private static boolean isInvalidAnswer(String a){
+        CharSequence[] chars = {"<", "(", "\'", "\"", "\\"};
+        for(CharSequence c : chars){
+            if(a.contains(c))
+                return true;
+        }
+        return false;
+    }
+
     private static String fixAnswer(String s){
-        if(s.startsWith("<i>")){
+        if(s.startsWith("<")){
             s = s.substring(3, s.length() - 4);
         }
         if(s.contains("(") || s.contains(")")) {
@@ -64,7 +76,6 @@ public class Trivia {
             for (int i = 0; i < s.length(); i++) {
                 if(s.charAt(i) != '(' && s.charAt(i) != ')')
                     temp += s.charAt(i);
-                System.out.println(temp);
             }
             s = temp;
         }
