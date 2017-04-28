@@ -36,7 +36,7 @@ public class PollCommands extends Commands {
                     } else {
                         msg.reply("Usage: /poll (title)");
                     }
-        }));
+                }));
     }
 
     private void createPollWithOptions(){
@@ -60,6 +60,6 @@ public class PollCommands extends Commands {
                     } else {
                         msg.reply("Usage: /polloption (title;option1;option2;option3)");
                     }
-        }));
+                }));
     }
 }

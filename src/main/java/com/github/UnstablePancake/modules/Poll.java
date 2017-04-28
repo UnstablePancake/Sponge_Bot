@@ -19,7 +19,6 @@ public class Poll {
             "<:Tommy420:269248038113902592>",
             "<:JeffreyWut:230126794123116544>"
     };
-
     private static int[] votes = {0, 0, 0, 0, 0, 0};
     private static String title = null;
     public static String id = null;
