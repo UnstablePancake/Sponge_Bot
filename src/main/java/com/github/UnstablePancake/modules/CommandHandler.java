@@ -15,6 +15,7 @@ public class CommandHandler {
         new GambleCommands(client);
         new GeneralCommands(client);
         new LuckCommands(client);
+        new MarketCommands(client);
         new ModeratorCommands(client);
         new PointCommands(client);
         new PollCommands(client);
