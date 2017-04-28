@@ -1,6 +1,8 @@
 package com.github.UnstablePancake.modules.commands;
 
 import co.kaioru.distort.d4j.command.D4JCommandBuilder;
+import com.github.UnstablePancake.bot.JSONHandler;
+import com.github.UnstablePancake.bot.Schedule;
 import com.github.UnstablePancake.bot.SpongeBot;
 import com.github.UnstablePancake.modules.Moderator;
 import com.github.UnstablePancake.modules.roles.RolePermissions;
@@ -10,15 +12,15 @@ public class ModeratorCommands extends Commands {
 
     private Moderator moderator = SpongeBot.moderator;
 
-    public ModeratorCommands(IDiscordClient client) {
+    public ModeratorCommands(IDiscordClient client){
         super(client);
         D4JModule.getListener().setPrefix("!");
         prune();
         setServerName();
         setServerDesc();
+        syncUserData();
         shutdown();
     }
-
 
     private void prune(){
         reg.registerCommand(new D4JCommandBuilder("prune")
@@ -38,7 +40,7 @@ public class ModeratorCommands extends Commands {
                     } else {
                         msg.getChannel().sendMessage(RolePermissions.noPermission());
                     }
-                }));
+        }));
     }
 
     private void setServerName(){
@@ -49,7 +51,7 @@ public class ModeratorCommands extends Commands {
                         msg.getGuild().changeName(name);
                         msg.delete();
                     }
-                }));
+        }));
     }
 
     private void setServerDesc(){
@@ -63,14 +65,26 @@ public class ModeratorCommands extends Commands {
                         msg.getGuild().getChannels().get(0).changeTopic(null);
                         msg.delete();
                     }
-                }));
+        }));
+    }
+
+    private void syncUserData(){
+        reg.registerCommand(new D4JCommandBuilder("sync")
+                .build((args, msg) -> {
+                    if(RolePermissions.isAdmin(msg))
+                        JSONHandler.createJSON();
+        }));
     }
 
     private void shutdown(){
         reg.registerCommand(new D4JCommandBuilder("shutdown")
                 .build((args, msg) -> {
-                    if(RolePermissions.isAdmin(msg))
+                    if(RolePermissions.isAdmin(msg)){
+                        JSONHandler.createJSON();
+                        msg.getChannel().sendMessage("Shutting down...");
+                        Schedule.scheduler.shutdownNow();
                         msg.getClient().logout();
-                }));
+                    }
+        }));
     }
 }

@@ -1,6 +1,7 @@
 package com.github.UnstablePancake.modules.commands;
 
 import co.kaioru.distort.d4j.command.D4JCommandBuilder;
+import com.github.UnstablePancake.modules.CommandHandler;
 import com.github.UnstablePancake.modules.roles.RolePermissions;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.handle.obj.IRole;
@@ -23,18 +24,11 @@ public class RoleCommands extends Commands {
                 .build((args, msg) -> {
                     if (RolePermissions.isAdmin(msg)){
                         if(args.size() > 0) {
-                            String id = args.get(0);
                             String text = args.get(1);
                             IRole role = null;
                             List<IRole> roles = msg.getClient().getRoles();
 
-                            if (id.startsWith("<@")) {
-                                id = "";
-                                for (int i = 0; i < args.get(0).length(); i++) {
-                                    if (Character.isDigit(args.get(0).charAt(i)))
-                                        id += args.get(0).charAt(i);
-                                }
-                            }
+                            String id = CommandHandler.parseMention(args);
 
                             for (int i = 0; i < roles.size(); i++) {
                                 if (roles.get(i).getName().equalsIgnoreCase(text))
@@ -54,7 +48,7 @@ public class RoleCommands extends Commands {
                     } else {
                         msg.getChannel().sendMessage(RolePermissions.noPermission());
                     }
-                }));
+        }));
     }
 
     private void remRole(){
@@ -62,10 +56,11 @@ public class RoleCommands extends Commands {
                 .build((args, msg) -> {
                     if(RolePermissions.isAdmin(msg)) {
                         if (args.size() > 0) {
-                            String id = args.get(0);
                             String text = args.get(1);
                             IRole role = null;
                             List<IRole> roles = msg.getClient().getRoles();
+
+                            String id = CommandHandler.parseMention(args);
 
                             if (id.startsWith("<@")) {
                                 id = "";
@@ -93,6 +88,6 @@ public class RoleCommands extends Commands {
                     } else {
                         msg.getChannel().sendMessage(RolePermissions.noPermission());
                     }
-                }));
+        }));
     }
 }
