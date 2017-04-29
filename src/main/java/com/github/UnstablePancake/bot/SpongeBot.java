@@ -1,6 +1,7 @@
 package com.github.UnstablePancake.bot;
 
 import com.github.UnstablePancake.modules.*;
+import com.github.UnstablePancake.modules.api.UrbanDictionary;
 import com.github.UnstablePancake.modules.games.trivia.Trivia;
 import org.json.JSONObject;
 import sx.blah.discord.api.ClientBuilder;
