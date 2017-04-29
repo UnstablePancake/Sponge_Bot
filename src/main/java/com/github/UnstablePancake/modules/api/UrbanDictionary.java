@@ -24,7 +24,6 @@ public class UrbanDictionary {
         try {
             JSONObject obj = (JSONObject)parser.parse(new FileReader("apiKeys.json"));
             key = (String)obj.get("urbandictionary_key");
-            System.out.println(key);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
