@@ -3,9 +3,11 @@ package com.github.UnstablePancake.modules.games.points;
 import com.github.UnstablePancake.bot.UserData;
 import com.github.UnstablePancake.modules.games.trivia.Trivia;
 import sx.blah.discord.handle.obj.IUser;
-import java.util.ArrayList;
 
 public class Points {
+
+    private static int[] pointArray;
+    private static String[] nameArray;
 
     public static void addPoints(IUser user){
         int index = UserData.getIndex(user.getID());
@@ -69,15 +71,34 @@ public class Points {
         return false;
     }
 
-    public static String getTopPlayer(){
-        String top = "Not found.";
-        int high = 0;
+    public static void sortLists(){
+        pointArray = new int[UserData.points.size()];
+        nameArray = new String[UserData.points.size()];
+
         for(int i = 0; i < UserData.points.size(); i++){
-            if(high < UserData.points.get(i)){
-                high = UserData.points.get(i);
-                top = UserData.names.get(i);
-            }
+            pointArray[i] = UserData.points.get(i);
+            nameArray[i] = UserData.names.get(i);
         }
-        return top;
+
+        for (int i = 0; i < pointArray.length - 1; i++) {
+            int j = i + 1;
+            int tmp = pointArray[j];
+            String tmp2 = nameArray[j];
+            while (j > 0 && tmp > pointArray[j-1]) {
+                pointArray[j] = pointArray[j-1];
+                nameArray[j] = nameArray[j-1];
+                j--;
+            }
+            pointArray[j] = tmp;
+            nameArray[j] = tmp2;
+        }
+    }
+
+    public static int[] getPointArray(){
+        return pointArray;
+    }
+
+    public static String[] getNameArray(){
+        return nameArray;
     }
 }

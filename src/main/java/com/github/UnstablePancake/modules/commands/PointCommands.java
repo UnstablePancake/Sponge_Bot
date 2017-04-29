@@ -8,6 +8,8 @@ import com.github.UnstablePancake.modules.roles.RolePermissions;
 import org.apache.commons.lang3.StringUtils;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.handle.obj.IUser;
+import sx.blah.discord.util.EmbedBuilder;
+import java.awt.*;
 
 public class PointCommands extends Commands {
 
@@ -101,9 +103,32 @@ public class PointCommands extends Commands {
     }
 
     private void leaderboard(){
-        reg.registerCommand(new D4JCommandBuilder("leaderboard")
+        reg.registerCommand(new D4JCommandBuilder("lb")
                 .build((args, msg) -> {
-                    msg.getChannel().sendMessage("**" + Points.getTopPlayer() + "** has the most points.");
+                    if(UserData.points.size() >= 5) {
+                        int max = 5;
+                        int request = 5;
+
+                        if(args.size() == 1 && StringUtils.isNumeric(args.get(0)) && Integer.parseInt(args.get(0)) <= UserData.points.size()) {
+                            request = Integer.parseInt(args.get(0));
+                            max = request;
+                        }
+
+                        Points.sortLists();
+
+                        String message = "";
+                        int[] points = Points.getPointArray();
+                        String[] names = Points.getNameArray();
+
+                        for (int i = 0; i < max; i++) {
+                            message += ("**" + (i + 1) + ".**  " + names[i] + " - " + points[i] + "\n");
+                        }
+
+                        msg.getChannel().sendMessage(null, new EmbedBuilder()
+                                .withColor(new Color(255, 255, 255))
+                                .appendField(":chart_with_upwards_trend: Leaderboard: Top " + request, message, false)
+                                .build(), false);
+                    }
                 }));
     }
 }
