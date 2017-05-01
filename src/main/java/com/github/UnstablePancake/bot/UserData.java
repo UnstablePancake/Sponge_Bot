@@ -21,6 +21,7 @@ public class UserData {
     public static ArrayList<String> ids = new ArrayList<>();
     public static ArrayList<Integer> points = new ArrayList<>();
     public static ArrayList<Integer> trophies = new ArrayList<>();
+    public static ArrayList<Long> lootTimes = new ArrayList<>();
 
     public UserData(IDiscordClient client){
         syncData();
@@ -52,6 +53,8 @@ public class UserData {
                     points.add(((Long)jsonObject.get("points")).intValue());
                 if(jsonObject.get("trophies") != null)
                     trophies.add(Math.toIntExact((Long)jsonObject.get("trophies")));
+                if(jsonObject.get("lootTime") != null)
+                    lootTimes.add((Long)jsonObject.get("lootTime"));
             }
         }
     }

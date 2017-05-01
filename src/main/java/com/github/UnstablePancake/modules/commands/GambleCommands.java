@@ -4,6 +4,7 @@ import co.kaioru.distort.d4j.command.D4JCommandBuilder;
 import com.github.UnstablePancake.bot.UserData;
 import com.github.UnstablePancake.modules.Utility.Utility;
 import com.github.UnstablePancake.modules.games.points.Gamble;
+import com.github.UnstablePancake.modules.games.points.Points;
 import org.apache.commons.lang3.StringUtils;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.handle.obj.IUser;
@@ -16,7 +17,7 @@ public class GambleCommands extends Commands {
         super(client);
         D4JModule.getListener().setPrefix("$");
         gamble();
-        //lootPoints();
+        lootPoints();
     }
 
     private void gamble(){
@@ -79,8 +80,19 @@ public class GambleCommands extends Commands {
         reg.registerCommand(new D4JCommandBuilder("loot")
                 .build((args, msg) -> {
                     IUser user = msg.getAuthor();
-                    int random = Utility.random(1000);
-                    Gamble.loot(msg, user, random);
+                    if(Points.lootReady(user)){
+                        int random = Utility.random(500);
+                        Gamble.loot(msg, user, random);
+
+                        for(int i = 0; i < UserData.ids.size(); i++){
+                            if(user.getID().equals(UserData.ids.get(i))){
+                                UserData.lootTimes.set(i, System.currentTimeMillis());
+                                break;
+                            }
+                        }
+
+                    } else
+                        msg.getChannel().sendMessage(":alarm_clock: " + msg.getAuthor().mention() + " Your loot is on cooldown.");
         }));
     }
 }

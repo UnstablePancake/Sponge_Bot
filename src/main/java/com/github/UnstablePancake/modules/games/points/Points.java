@@ -94,6 +94,19 @@ public class Points {
         }
     }
 
+    public static boolean lootReady(IUser user){
+        String id = user.getID();
+        int index = -1;
+        Long lootTime;
+        for(int i = 0; i < UserData.ids.size(); i++){
+            if(id.equals(UserData.ids.get(i)))
+                index = i;
+        }
+
+        lootTime = UserData.lootTimes.get(index);
+        return System.currentTimeMillis() - lootTime >= 300000;
+    }
+
     public static int[] getPointArray(){
         return pointArray;
     }

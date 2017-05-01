@@ -36,11 +36,11 @@ public class Gamble {
 
         if (random > 1) {
             UserData.points.set(index, points + randPoints);
-            msg.getChannel().sendMessage(user.mention() + " You found **" + randPoints + "** points.");
+            msg.getChannel().sendMessage(user.mention() + ":moneybag: You found **" + randPoints + "** points.");
         } else if (random == 1) {
             UserData.points.set(index, points + 100000);
-            msg.getChannel().sendMessage(user.mention() + " You found **100000** points.");
+            msg.getChannel().sendMessage(user.mention() + ":moneybag: You found **100000** points.");
         } else
-            msg.getChannel().sendMessage(user.mention() + "You found nothing.");
+            msg.getChannel().sendMessage(user.mention() + ":moneybag: You found nothing.");
     }
 }
