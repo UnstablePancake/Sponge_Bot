@@ -79,7 +79,7 @@ public class GeneralCommands extends Commands {
                     IMessage message = null;
                     if(args.size() > 0)
                         message = msg.getGuild().getMessageByID(args.get(0));
-                    
+
                     channel.pin(message);
         }));
     }
