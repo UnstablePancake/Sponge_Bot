@@ -5,6 +5,9 @@ import com.github.UnstablePancake.modules.CommandHandler;
 import com.github.UnstablePancake.modules.Utility.Info;
 import com.github.UnstablePancake.modules.roles.RolePermissions;
 import sx.blah.discord.api.IDiscordClient;
+import sx.blah.discord.handle.obj.IChannel;
+import sx.blah.discord.handle.obj.IGuild;
+import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.handle.obj.IUser;
 import sx.blah.discord.util.EmbedBuilder;
 import java.awt.*;
@@ -15,9 +18,11 @@ public class GeneralCommands extends Commands {
         super(client);
         ping();
         avatar();
+        userInfo();
+        pinMessage();
+        unpinMessage();
         announce();
         talk();
-        userInfo();
     }
 
     private void ping(){
@@ -64,6 +69,32 @@ public class GeneralCommands extends Commands {
                             .appendField(":satellite_orbital: **Status:** ", Info.getOnlineStatus(user), true)
                             .appendField(":video_game: **Game:** ", Info.getGame(user), true)
                             .build(), false);
+        }));
+    }
+
+    private void pinMessage(){
+        reg.registerCommand(new D4JCommandBuilder("pinmessage")
+                .build((args, msg) -> {
+                    IChannel channel = msg.getChannel();
+                    IMessage message = null;
+                    if(args.size() > 0)
+                        message = msg.getGuild().getMessageByID(args.get(0));
+                    
+                    channel.pin(message);
+        }));
+    }
+
+    private void unpinMessage(){
+        reg.registerCommand(new D4JCommandBuilder("unpinmessage")
+                .build((args, msg) -> {
+                    IChannel channel = msg.getChannel();
+                    IMessage message = null;
+                    if(args.size() > 0)
+                        message = msg.getGuild().getMessageByID(args.get(0));
+
+                    channel.unpin(message);
+
+                    msg.getChannel().sendMessage("**" + msg.getAuthor().getDisplayName(msg.getGuild()) + "** has unpinned a message from this channel.");
         }));
     }
 
