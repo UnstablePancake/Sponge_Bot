@@ -21,22 +21,21 @@ public class APICommands extends Commands {
         getYoMammaJoke();
         getCalculation();
         getGithubInfo();
-        //getChuckNorrisJoke();
+        getChuckNorrisJoke();
         //getUrbanDictionaryDefinition();
     }
 
     private void getYoMammaJoke(){
         reg.registerCommand(new D4JCommandBuilder("yomamma")
                 .build((args, msg) -> {
-                msg.getChannel().sendMessage("<:HeyItsMeKennyBarber:278008448833159168> " + Joke.getJoke("http://api.yomomma.info/", "joke"));
+                msg.getChannel().sendMessage(Joke.getYoMammaJoke("http://api.yomomma.info/"));
         }));
     }
 
     private void getChuckNorrisJoke(){
         reg.registerCommand(new D4JCommandBuilder("norris")
                 .build((args, msg) -> {
-            //fix
-                    msg.getChannel().sendMessage(":cowboy: " + Joke.getJoke("http://api.icndb.com/jokes/random", "joke"));
+                    msg.getChannel().sendMessage(Joke.getChuckNorrisJoke("http://api.icndb.com/jokes/random"));
                 }));
     }
 

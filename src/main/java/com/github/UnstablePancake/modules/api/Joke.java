@@ -6,7 +6,7 @@ import org.json.simple.parser.JSONParser;
 
 public class Joke {
 
-    public static String getJoke(String url , String key){
+    public static String getYoMammaJoke(String url){
         JSONParser parser = new JSONParser();
         JSONObject obj = new JSONObject();
         try {
@@ -14,6 +14,20 @@ public class Joke {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return (String)obj.get(key);
+        return (String)obj.get("joke");
+    }
+
+    public static String getChuckNorrisJoke(String url){
+        JSONParser parser = new JSONParser();
+        JSONObject obj = new JSONObject();
+        JSONObject jokeObj;
+        try {
+            obj = (JSONObject)parser.parse(JSONHandler.readUrl(url));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        jokeObj = (JSONObject)obj.get("value");
+        return (String)jokeObj.get("joke");
     }
 }
