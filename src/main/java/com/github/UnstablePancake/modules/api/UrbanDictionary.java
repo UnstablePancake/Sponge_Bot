@@ -1,6 +1,7 @@
 package com.github.UnstablePancake.modules.api;
 
 import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.apache.commons.lang3.StringUtils;
@@ -23,7 +24,7 @@ public class UrbanDictionary {
         JSONParser parser = new JSONParser();
         try {
             JSONObject obj = (JSONObject)parser.parse(new FileReader("apiKeys.json"));
-            key = (String)obj.get("urbandictionary_key");
+            key = (String)obj.get("mashape_key");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
